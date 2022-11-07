@@ -23,3 +23,34 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+
+export const ADD_ORDER = gql`
+  mutation addOrder($products: [ID]!) {
+    addOrder(products: $products) {
+      purchaseDate
+      products {
+        _id
+      name
+      description
+      price
+      quantity
+      category {
+        name
+      } 
+      }
+    }
+  }
+`;
+
+export const ADD_CREATION = gql`
+  mutation addCreation($creationText: String!, $url: String!) {
+    addCreation(creationText: $creationText, url: $url) {
+      _id
+      creationText
+      url
+      createdAt
+      username
+    }
+  }
+`;
