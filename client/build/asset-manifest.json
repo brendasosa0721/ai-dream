@@ -1,12 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.31d6cfe0.css",
-    "main.js": "/static/js/main.ae80a957.js",
+    "main.js": "/static/js/main.4129698d.js",
+    "static/media/puppy-bicycle.png": "/static/media/puppy-bicycle.c2446e38b2f08fb06281.png",
+    "static/media/fish-camping.png": "/static/media/fish-camping.7a72dc1996590b6cd191.png",
+    "static/media/astronaut-cooking.png": "/static/media/astronaut-cooking.0f9f2d301557341c2d41.png",
+    "static/media/icecream-sprinkles.jpg": "/static/media/icecream-sprinkles.57fce7aa68a2e92911f3.jpg",
     "index.html": "/index.html",
-    "main.ae80a957.js.map": "/static/js/main.ae80a957.js.map"
+    "main.4129698d.js.map": "/static/js/main.4129698d.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.ae80a957.js"
+    "static/js/main.4129698d.js"
   ]
 }
