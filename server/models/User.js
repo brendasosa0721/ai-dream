@@ -20,10 +20,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    images: [
+    creations: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Images'
+        ref: 'Creation'
       }
     ]
   }
@@ -43,6 +43,10 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.isCorrectPassword = async function(password) {
   return bcrypt.compare(password, this.password);
 };
+
+// userSchema.virtual('totalCredits').get(function() {
+//   return this.totalCredits;
+// });
 
 
 const User = model('User', userSchema);

@@ -1,11 +1,13 @@
+const { User, Creation } = require('../models');
+const { signToken } = require('../utils/auth');
+
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
-          .populate('thoughts')
-          .populate('friends');
+          .populate('creations');
 
         return userData;
       }
@@ -15,8 +17,14 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        .populate('friends')
-        .populate('thoughts');
+        .populate('creations');
+    },
+    creations: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Creation.find(params).sort({ createdAt: -1 });
+    },
+    creation: async (parent, { _id }) => {
+      return Creation.findOne({ _id });
     }
   },
 
@@ -42,6 +50,20 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    addCreation: async (parent, args, context) => {
+      console.log(context.user.username);
+      if (context.user) {
+        const creation = await Creation.create({ ...args, username: context.user.username });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { creations: creation._id } },
+          { new: true }
+        );
+
+        return creation;
+      }
     }
   }
 
