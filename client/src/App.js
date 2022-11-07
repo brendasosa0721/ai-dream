@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
+import ResponsiveAppBar from "./components/Navigation";
 import Footer from './components/Footer';
 import Home from "./pages/Home";
 import Results from "./pages/Results";
@@ -11,11 +11,14 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
+import "@mui/material";
+import "@emotion/react"; 
+import "@emotion/styled"
 
 function App() {
 
-  const [menu] = useState(['Logo', 'Products', 'Marketing', 'About']);
-  const [currentTitle, setCurrentTitle] = useState(menu[0])
+  // const [menu] = useState(['Logo', 'Products', 'Marketing', 'About']);
+  // const [currentTitle, setCurrentTitle] = useState(menu[0])
 
 
   const httpLink = createHttpLink({
@@ -41,23 +44,16 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <Header
-            menu={menu} 
-            currentTitle={currentTitle}    
-            setCurrentTitle={setCurrentTitle}    
-            ></Header>
-            <div className="container">
-              <Routes>
-                <Route
-                  path="/"
-                  element={<Home />}
-                />
-                <Route
+          <ResponsiveAppBar/>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
                   path="/results"
                   element={<Results />}
                 />
-              </Routes>
-            </div>
+            </Routes>
+          </div>
           <Footer />
         </div>
       </Router>
