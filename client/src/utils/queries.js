@@ -21,3 +21,11 @@ export const QUERY_USER = gql`
 }
 `;
 
+export const QUERY_CREATION = gql`
+  query Api($promptInput: String!) {
+    api(promptInput: $promptInput) {
+      data
+    }
+  }
+`;
+

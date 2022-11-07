@@ -1,24 +1,27 @@
 import { useState } from "react";
-import generateImage from "../utils/api"
+import { QUERY_CREATION } from "../utils/queries";
+import { useLazyQuery } from '@apollo/react-hooks';
 
 export default function Results() {
   const [promptInput, setPromptInput] = useState("");
-  const [result, setResult] = useState();
+  const [prompt, {loading, data, error}] = useLazyQuery(QUERY_CREATION,{
+    variables : {promptInput: promptInput}
+    }
+  );
 
+  let result;
   async function onSubmit(event) {
+    prompt();
     event.preventDefault();
-    const response = await generateImage({
-      prompt: promptInput
-    });
-    const data = await response;
-    setResult(data);
-    setPromptInput("");
   }
-
+  if (!loading) {
+    result = data?.api.data;
+    console.log(result);
+  }
   return (
     <div>
       
-      <h1>Logo Generator</h1>
+      <h1>Logo Generator </h1>
       <main>
         <h3>Enter logo design concept</h3>
         <form onSubmit={onSubmit}>
@@ -31,11 +34,11 @@ export default function Results() {
           />
           <input type="submit" value="Generate image" />
         </form>
-        {result?.data.data.length > 0 ? (
+        {result?.data.length > 0 ? (
         <>
           <hr />
           <div>
-            <img src={result.data.data[0].url} alt="logo design concept" />
+            <img src={result.data[0].url} alt="logo design concept" />
           </div>
         </>
         ):''}
