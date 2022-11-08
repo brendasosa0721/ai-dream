@@ -11,7 +11,7 @@ import astronaut from "../../assets/astronaut-cooking.png";
 import fish from "../../assets/fish-camping.png";
 import icecream from "../../assets/icecream-sprinkles.jpg";
 import puppy from "../../assets/puppy-bicycle.png";
-import "./Hero.css"
+import "./Hero.css";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
