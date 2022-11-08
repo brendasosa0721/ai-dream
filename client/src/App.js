@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ResponsiveAppBar from "./components/Navigation";
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import Home from "./pages/Home";
 import Results from "./pages/Results";
 import Signin from "./pages/Signin";
