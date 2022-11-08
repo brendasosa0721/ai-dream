@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import astronaut from "../../assets/astronaut-cooking.png";
@@ -39,12 +39,12 @@ export default function Hero() {
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <Item className="text-container">
-            <Typography className="text" variant="h3" gutterBottom>
+            <Typography className="text" variant="h2" gutterBottom>
               What will AI design for you today?
             </Typography>
-            <Button color="secondary" variant="contained">
+            {/* <Button color="secondary" variant="contained">
               Get Started!
-            </Button>
+            </Button> */}
           </Item>
         </Grid>
         <Grid item xs={3}>
