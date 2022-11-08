@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ResponsiveAppBar from "./components/Navigation";
 import Footer from './components/Footer';
 import Home from "./pages/Home";
 import Results from "./pages/Results";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 import { setContext } from '@apollo/client/link/context';
 import {
   ApolloClient,
@@ -49,9 +51,17 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
-                  path="/results"
-                  element={<Results />}
-                />
+                path="/results"
+                element={<Results />}
+              />
+              <Route
+                path="/sign-in"
+                element={<Signin />}
+              />
+              <Route
+                path="/sign-up"
+                element={<Signup />}
+              />
             </Routes>
           </div>
           <Footer />

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Link } from "react-router-dom";
+import Auth from "../../utils/auth";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +17,7 @@ import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 import SettingsSystemDaydreamTwoToneIcon from "@mui/icons-material/SettingsSystemDaydreamTwoTone";
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,6 +37,10 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  // if (Auth.loggedIn()) {
+  //   setIsLogged(true);    
+  // }
 
   return (
     <AppBar position="static">
@@ -152,11 +158,27 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+            { Auth.loggedIn() ? (
+              <div>
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+                  <MenuItem key="logout" href="/" onClick={() => Auth.logout()}>
+                    <Typography textAlign="center">Sign-out</Typography>
+                  </MenuItem>
+              </div>
+            ):
+              <div>
+                  <MenuItem key="Sign-In"  component={Link} to="/sign-in" >
+                    <Typography textAlign="center">Sign-In</Typography>
+                  </MenuItem>
+                  <MenuItem key="Sign-Up" component={Link} to="/sign-up" >
+                    <Typography textAlign="center">Sign-Up</Typography>
+                  </MenuItem>
+              </div>
+            }
             </Menu>
           </Box>
         </Toolbar>
