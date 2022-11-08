@@ -34,19 +34,11 @@ const theme = createTheme({
 });
 export default function Hero() {
   return (
+
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={2}>
-          <Item className="img-container">
-            <img className="hero-img" alt="astronaut cooking" src={astronaut} />
-          </Item>
-          <Item className="img-container">
-            <img className="hero-img" alt="icecream sprinkles" src={icecream} />
-          </Item>
-        </Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={4}>
+        <Grid item xs={12}>
           <Item className="text-container">
-            {" "}
             <Typography className="text" variant="h3" gutterBottom>
               What will AI design for you today?
             </Typography>
@@ -55,14 +47,27 @@ export default function Hero() {
             </Button>
           </Item>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Item className="img-container">
-            <img className="hero-img" alt="fish camping" src={fish} />
+            <img className="hero-img" alt="astronaut cooking" src={astronaut} />
           </Item>
+        </Grid>
+        <Grid item xs={3}>
+          <Item className="img-container">
+            <img className="hero-img" alt="icecream sprinkles" src={icecream} />
+          </Item>
+        </Grid>
+        <Grid item xs={3}>
+          <Item className="img-container">
+            <img className="hero-img" alt="fish camping" src={fish} />{" "}
+          </Item>
+        </Grid>
+        <Grid item xs={3}>
           <Item className="img-container">
             <img className="hero-img" alt="puppy riding bicycle" src={puppy} />
           </Item>
         </Grid>
+        
       </Grid>
     </Box>
   );

@@ -3,30 +3,32 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-const currencies = [
+
+const contentTypes = [
   {
-    value: "USD",
-    label: "$",
+    value: "photograph of",
+    label: "photograph",
   },
   {
-    value: "EUR",
-    label: "€",
+    value: "drawing of",
+    label: "drawing",
   },
   {
-    value: "BTC",
-    label: "฿",
+    value: "sketch of",
+    label: "sketch",
   },
   {
-    value: "JPY",
-    label: "¥",
+    value: "3d render of",
+    label: "3d render",
   },
 ];
 
+
 export default function Form() {
-  const [currency, setCurrency] = React.useState("EUR");
+  const [content, setContentType] = React.useState("content type");
 
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    setContentType(event.target.value);
   };
 
   return (
@@ -40,106 +42,24 @@ export default function Form() {
     >
       <div>
         <TextField
-          id="outlined-select-currency"
+          id="outlined-select-content"
           select
-          label="Select"
-          value={currency}
+          label="Select your content type"
+          value={content}
           onChange={handleChange}
-          helperText="Please select your currency"
         >
-          {currencies.map((option) => (
+          {contentTypes.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
         <TextField
-          id="outlined-select-currency-native"
-          select
-          label="Native select"
-          value={currency}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          helperText="Please select your currency"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      </div>
-      <div>
-        <TextField
-          id="filled-select-currency"
-          select
-          label="Select"
-          value={currency}
-          onChange={handleChange}
-          helperText="Please select your currency"
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="filled-select-currency-native"
-          select
-          label="Native select"
-          value={currency}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          helperText="Please select your currency"
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      </div>
-      <div>
-        <TextField
-          id="standard-select-currency"
-          select
-          label="Select"
-          value={currency}
-          onChange={handleChange}
-          helperText="Please select your currency"
-          variant="standard"
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="standard-select-currency-native"
-          select
-          label="Native select"
-          value={currency}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          helperText="Please select your currency"
-          variant="standard"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
+          required
+          id="outlined-required"
+          label="describe the subject"
+          
+        />
       </div>
     </Box>
   );
