@@ -4,6 +4,7 @@ import ResponsiveAppBar from "./components/Navigation";
 import Footer from './components/Footer';
 import Home from "./pages/Home";
 import Results from "./pages/Results";
+import Creation from "./pages/Creation";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { setContext } from '@apollo/client/link/context';
@@ -53,6 +54,10 @@ function App() {
               <Route
                 path="/results"
                 element={<Results />}
+              />
+              <Route
+                path="/creation"
+                element={<Creation />}
               />
               <Route
                 path="/sign-in"
