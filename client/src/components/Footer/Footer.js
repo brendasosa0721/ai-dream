@@ -4,7 +4,7 @@ import { AiOutlineGithub } from "react-icons/ai"; //Adding the react icon //
 import { AiOutlineCopyright} from "react-icons/ai";
 
 //Building the footer session for all the pages//
-function Footer() {
+ function Footer() {
 
   return (
     <section className="content-footer">
