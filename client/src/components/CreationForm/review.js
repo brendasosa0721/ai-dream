@@ -4,6 +4,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import { QUERY_CREATION } from "../../utils/queries";
+import { useLazyQuery } from '@apollo/react-hooks';
 
 const products = [
   {
@@ -38,12 +40,27 @@ const payments = [
 ];
 
 export default function Review() {
+  const [promptInput, setPromptInput] = React.useState("");
+  const [prompt, {loading, data, error}] = useLazyQuery(QUERY_CREATION,{
+    variables : {promptInput: promptInput}
+    }
+  );
+
+  let result;
+  async function onSubmit(event) {
+    prompt();
+    event.preventDefault();
+  }
+  if (!loading) {
+    result = data?.api.data;
+    console.log(result);
+  } 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Review your information
       </Typography>
-      <List disablePadding>
+      {/* <List disablePadding>
         {products.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={product.name} secondary={product.desc} />
@@ -83,7 +100,7 @@ export default function Review() {
             ))}
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </React.Fragment>
   );
 }

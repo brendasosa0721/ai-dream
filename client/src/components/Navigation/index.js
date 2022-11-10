@@ -15,6 +15,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 import SettingsSystemDaydreamTwoToneIcon from "@mui/icons-material/SettingsSystemDaydreamTwoTone";
+import "./navigation.css"
+import { lightBlue } from "@mui/material/colors";
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard'];
@@ -43,11 +46,11 @@ function ResponsiveAppBar() {
   // }
 
   return (
-    <AppBar position="static">
+    <AppBar position="static"className='gradient'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <FilterDramaIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:lightBlue }}
           />
           <Typography
             variant="h6"
@@ -60,8 +63,9 @@ function ResponsiveAppBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: 'white',
               textDecoration: "none",
+              padding: "2px 0 0 0",
             }}
           >
             AI Dream
@@ -118,7 +122,7 @@ function ResponsiveAppBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "white",
               textDecoration: "none",
             }}
           >

@@ -54,26 +54,41 @@ type Api {
   data: JSON
 }
 
+type BusinessCategory {
+  _id: ID
+  name: String
+}
+
+type BusinessType {
+  _id: ID
+  title: String!
+  businessCategory: [BusinessCategory]
+}
+
 type Query {
   me: User
   api(promptInput: String!): Api
   user(username: String!): User
   creation(_id: ID!): Creation 
   creations(username: String): [Creation]
-  categories: Category
+  categories: [Category]
   product(_id: ID!): Product 
-  products(category: ID!): Product 
+  products: [Product] 
   order(_id: ID!): Order 
   checkout(products: [ID]!): Checkout
-
-
-
+  businessCategories: [BusinessCategory]
+  businessTypes(businessCategory: ID!): [BusinessType]
 }
 
 type Mutation {
   login(email: String!, password: String!): Auth
   addUser(username: String!, email: String!, password: String!): Auth
   addCreation(creationText: String!, url: String!): Creation
+  addOrder(products: [ID]!): Order
+  updateProduct(_id: ID!, quantity: Int!): Product
+  addBusinessCategory(name: String!): BusinessCategory
+  addBusinessType(title: String!, BusinessCategory: ID!): BusinessType
+
 }
 `;
 
