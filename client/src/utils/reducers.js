@@ -10,7 +10,7 @@ import {
   UPDATE_CURRENT_BUSINESS_CATEGORY,
   UPDATE_BUSINESS_TYPES,
   UPDATE_CURRENT_BUSINESS_TYPE,
-  UPDATE_PROMPT
+  UPDATE_CONCEPT_INFO
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -89,10 +89,10 @@ export const reducer = (state, action) => {
         currentBusinessType: action.currentBusinessType
       };
 
-    case UPDATE_PROMPT:
+    case UPDATE_CONCEPT_INFO:
       return {
         ...state,
-        currentPrompt: action.currentPrompt
+        conceptInfo: action.conceptInfo
       }
 
     default:

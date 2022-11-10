@@ -6,7 +6,8 @@ import { useStoreContext } from '../../utils/GlobalState';
 import {
   UPDATE_BUSINESS_CATEGORIES,
   UPDATE_CURRENT_BUSINESS_CATEGORY,
-  UPDATE_CURRENT_BUSINESS_TYPE
+  UPDATE_CURRENT_BUSINESS_TYPE,
+  UPDATE_CONCEPT_INFO
 } from '../../utils/actions';
 import { QUERY_BUSINESS_CATEGORIES } from "../../utils/queries";
 import { idbPromise } from '../../utils/helpers';
@@ -51,7 +52,8 @@ function BusinessCategoryForm() {
     {
       type: UPDATE_CURRENT_BUSINESS_TYPE,
       currentBusinessType: "Select type...",
-    });
+    }
+    );
   };
   return (
     <>
@@ -66,7 +68,7 @@ function BusinessCategoryForm() {
         <MenuItem value={currentBusinessCategory}>{currentBusinessCategory}</MenuItem>
         {businessCategories.map((item) => (
         <MenuItem key={item._id} 
-                  value={item._id} 
+                  value={item.name} 
                   >{item.name}
         </MenuItem>
         ))}

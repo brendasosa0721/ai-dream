@@ -13,7 +13,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentBusinessCategory: 'Select category...',
     businessTypes: [],
     currentBusinessType: 'Select type...',
-    prompt: {}
+    conceptInfo: []
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

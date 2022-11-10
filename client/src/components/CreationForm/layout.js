@@ -12,6 +12,31 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 export function Layout() {
+  const style = ['accent lighting', 'backlight', 'blacklight', 'blinding light', 'candlelight', 
+                'concert lighting', 'crepuscular rays', 'direct sunlight', 'dusk', 'Edison bulb', 
+                'electric arc', 'fire', 'fluorescent', 'glowing', 'glowing radioactively', 'glow-stick', 
+                'lava glow', 'moonlight', 'natural lighting', 'neon lamp', 'nightclub lighting', 
+                'nuclear waste glow', 'quantum dot display', 'spotlight', 'strobe', 'sunlight', 
+                'ultraviolet', 'dramatic lighting', 'dark lighting', 'soft lighting'];
+
+  const detail = ['highly detailed', 'grainy', 'realistic', 'unreal engine', 'octane render', 'bokeh', 'vray',
+                 'houdini render', 'quixel megascans', 'depth of field', 'arnold render',' 8k uhd', 'raytracing', 
+                 'cgi', 'lumen reflections', 'cgsociety', 'ultra realistic', 'volumetric fog', 'overglaze', 
+                 'analog photo', 'polaroid', '100mm', 'film photography', 'dslr', 'cinema4d', 'studio quality'];
+  
+  const art = ['Abstract', 'Medieval art', 'Renaissance', 'Baroque', 'Rococo', 'Neoclassicism', 'Romanticism', 
+                'Impressionism', 'post-Expression', 'Cubism', 'Futurism', 'Art Deco', 'Abstract Expressionism', 
+                'Contemporary', 'pop art', 'surrealism', 'fantasy'];
+                
+  const technique = ['Digital art', 'digital painting', 'color page', 'featured on pixiv', 'trending on artstation',
+                     'precise line-art', 'tarot card', 'character design', 'concept art', 'symmetry', 'golden ratio', 
+                     'evocative', 'award winning', 'shiny', 'smooth', 'surreal', 'divine', 'celestial', 'elegant', 
+                     'oil painting', 'soft', 'fascinating', 'fine art'];
+                     
+  const camera = ['ultra wide-angle', 'wide-angle', 'aerial view', 'massive scale', 'street level view', 'landscape', 
+                  'panoramic', 'bokeh', 'fisheye', 'dutch angle', 'low angle', 'extreme long-shot', 'long shot', 
+                  'close-up', 'extreme close-up'];
+
   const [primaryColor, setPrimaryColor] = useState(0);
   const [secundaryColor, setSecundaryColor] = useState(0);
   const handleChangePrimary = (value1) => {
@@ -22,44 +47,31 @@ export function Layout() {
     console.log("onChange=", value2);
     setSecundaryColor(value2);
   };
+  function capitalize(s)
+    {
+        return s[0].toUpperCase() + s.slice(1);
+    }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Define a Layout
       </Typography>
       <Grid container spacing={3}>
-      <Grid item xs={12}>
-          
-          <InputLabel id="type">Select a Theme</InputLabel>
+        <Grid item xs={12}>
+          <InputLabel id="style">Select a Style</InputLabel>
           <Select
-            labelId="type"
-            id="type"
-            label="Type"
-            value={10}
-          >
-            <MenuItem value={10}>Highly detailed</MenuItem>
-            <MenuItem value={20}>Grainy</MenuItem>
-            <MenuItem value={30}>Realistic</MenuItem>
-            <MenuItem value={40}>Unreal engine</MenuItem>
-            <MenuItem value={30}>Octane render</MenuItem>
-            <MenuItem value={30}>Bokeh</MenuItem>
-            <MenuItem value={30}>Vray</MenuItem>
-            <MenuItem value={30}>Houdini render</MenuItem>
-            <MenuItem value={30}>Quixel megascans</MenuItem>
-            <MenuItem value={30}>Depth of field</MenuItem>
-            <MenuItem value={30}>Raytracing</MenuItem>
-            <MenuItem value={30}>Cgi</MenuItem>
-            <MenuItem value={30}>Lumen reflections</MenuItem>
-            <MenuItem value={30}>Volumetric fog</MenuItem>
-            <MenuItem value={30}>Overglaze</MenuItem>
-            <MenuItem value={30}>Analog photo</MenuItem>
-            <MenuItem value={30}>Polaroid</MenuItem>
-            <MenuItem value={30}>Film photography</MenuItem>
-            <MenuItem value={30}>Dslr</MenuItem>
-            <MenuItem value={30}>Cinema4d</MenuItem>
-            <MenuItem value={30}>Studio quality</MenuItem>
-
-
+            labelId="style"
+            id="style"
+            label="Style"
+            value={style[0]}
+            >
+            {style.map((item) => (
+              <MenuItem key={item} 
+                        value={item} 
+                        >{capitalize(item)}
+              </MenuItem>
+              ))}
           </Select>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -98,77 +110,70 @@ export function Layout() {
             variant="standard"
           />
         </Grid>
-
         <Grid item xs={12}>
-          
-          <InputLabel id="type">Select a Style</InputLabel>
+          <InputLabel id="imageDetail">Select Image Detail</InputLabel>
           <Select
-            labelId="type"
-            id="type"
-            label="Type"
-            value={10}
-          >
-            <MenuItem value={10}>Accent lighting</MenuItem>
-            <MenuItem value={20}>Backlight</MenuItem>
-            <MenuItem value={30}>Blacklight</MenuItem>
-            <MenuItem value={40}>Blinding light</MenuItem>
-            <MenuItem value={40}>Candlelight</MenuItem>
-            <MenuItem value={40}>Concert lighting,</MenuItem>
-            <MenuItem value={40}>Crepuscular rays</MenuItem>
-            <MenuItem value={40}>Direct sunlight</MenuItem>
-            <MenuItem value={40}>Dusk</MenuItem>
-            <MenuItem value={40}>Edison bulb</MenuItem>
-            <MenuItem value={40}>Electric arc</MenuItem>
-            <MenuItem value={40}>Fire</MenuItem>
-            <MenuItem value={40}>Fluorescent</MenuItem>
-            <MenuItem value={40}>Glowing</MenuItem>
-            <MenuItem value={40}>Glowing radioactively</MenuItem>
-            <MenuItem value={40}>Glow-stick</MenuItem>
-            <MenuItem value={40}>Lava glow</MenuItem>
-            <MenuItem value={40}>Moonlight</MenuItem>
-            <MenuItem value={40}>Natural</MenuItem>
-            <MenuItem value={40}>Lighting</MenuItem>
-            <MenuItem value={40}>Neon lamp</MenuItem>
-            <MenuItem value={40}>Nightclub lighting</MenuItem>
-            <MenuItem value={40}>Nuclear waste glow</MenuItem>
-            <MenuItem value={40}>Quantum dot display</MenuItem>
-            <MenuItem value={40}>Spotlight</MenuItem>
-            <MenuItem value={40}>Strobe</MenuItem>
-            <MenuItem value={40}>Sunlight</MenuItem>
-            <MenuItem value={40}>Ultraviolet</MenuItem>
-            <MenuItem value={40}>Dramatic lighting</MenuItem>
-            <MenuItem value={40}>Dark lighting</MenuItem>
-            <MenuItem value={40}>Soft lighting</MenuItem>
+            labelId="imageDetail"
+            id="imageDetail"
+            label="Image Detail"
+            value={detail[0]}
+            >
+            {detail.map((item) => (
+              <MenuItem key={item} 
+                        value={item} 
+                        >{capitalize(item)}
+              </MenuItem>
+              ))}
           </Select>
         </Grid>
-
-      </Grid>
-      <Grid item xs={12}>
-          
-          <InputLabel id="type">Camera View</InputLabel>
+        <Grid item xs={12}>
+          <InputLabel id="technique">Select Technique</InputLabel>
           <Select
-            labelId="type"
-            id="type"
-            label="Type"
-            value={10}
-          >
-            <MenuItem value={10}>Ultra wide-angle</MenuItem>
-            <MenuItem value={30}>Wide-angle</MenuItem>
-            <MenuItem value={40}>Aerial view</MenuItem>
-            <MenuItem value={40}>Massive scale</MenuItem>
-            <MenuItem value={40}>Street level view,</MenuItem>
-            <MenuItem value={40}>Panoramic</MenuItem>
-            <MenuItem value={40}>Bokeh</MenuItem>
-            <MenuItem value={40}>Fisheye</MenuItem>
-            <MenuItem value={40}>Dutch angle</MenuItem>
-            <MenuItem value={40}>Low angle</MenuItem>
-            <MenuItem value={40}>Extreme long-shot</MenuItem>
-            <MenuItem value={40}>Long shot</MenuItem>
-            <MenuItem value={40}>Close-up</MenuItem>
-            <MenuItem value={40}>Extreme close-up</MenuItem>
-        
+            labelId="technique"
+            id="technique"
+            label="Technique"
+            value={technique[0]}
+            >
+            {technique.map((item) => (
+              <MenuItem key={item} 
+                        value={item} 
+                        >{capitalize(item)}
+              </MenuItem>
+              ))}
           </Select>
-
+        </Grid>
+        <Grid item xs={12}>
+          <InputLabel id="type">Select Art Style</InputLabel>
+          <Select
+            labelId="art"
+            id="art"
+            label="Art"
+            value={art[0]}
+            >
+            {art.map((item) => (
+              <MenuItem key={item} 
+                        value={item} 
+                        >{capitalize(item)}
+              </MenuItem>
+              ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12}>
+          <InputLabel id="camera">Select Camera View</InputLabel>
+          <Select
+            labelId="camera"
+            id="camera"
+            label="Camera"
+            value={camera[0]}
+            >
+            {camera.map((item) => (
+              <MenuItem key={item} 
+                        value={item} 
+                        >{capitalize(item)}
+              </MenuItem>
+              ))}
+          </Select>
+        </Grid>
       </Grid>
     </React.Fragment>
   );

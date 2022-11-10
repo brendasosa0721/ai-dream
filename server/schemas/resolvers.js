@@ -126,7 +126,7 @@ const resolvers = {
         };
       }
 
-      return await BusinessType.find(params).populate('businessCategory');
+      return (await BusinessType.find().populate('businessCategory')).filter((a) => a.businessCategory.name == businessCategory);
     },
     api: async (parent, args, context) => {
       console.log(args.promptInput);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -10,10 +10,27 @@ import Checkbox from '@mui/material/Checkbox';
 import BusinessCategoryForm from '../../components/BusinessCategoryForm'
 import BusinessTypeForm from '../../components/BusinessTypeForm'
 import { useStoreContext } from '../../utils/GlobalState';
+import {
+  UPDATE_CONCEPT_INFO
+} from '../../utils/actions';
 
 export default function ConceptForm() {
-  const [state, setState] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
+
   const { currentBusinessCategory } = state;
+  const [formState, setFormState] = useState({ name: '', type: '', description: '' });
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value
+    });
+    dispatch({
+      type: UPDATE_CONCEPT_INFO,
+      conceptInfo: formState
+    })
+  };
 
   return (
     <React.Fragment>
@@ -28,23 +45,24 @@ export default function ConceptForm() {
             name="name"
             label="Name of your creation"
             fullWidth
-            autoComplete="given-name"
             variant="standard"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
-          
           <InputLabel id="type">Type of Creation</InputLabel>
           <Select
             labelId="type"
             id="type"
+            name="type"
             label="Type"
-            value={10}
+            value="Logo Design Concept"
+            onChange={handleChange}
           >
-            <MenuItem value={10}>Logo Design Concept</MenuItem>
-            <MenuItem value={20}>Product Design Concept</MenuItem>
-            <MenuItem value={30}>Marketing Image</MenuItem>
-            <MenuItem value={40}>Social Media Marketing</MenuItem>
+            <MenuItem value="Logo Design Concept">Logo Design Concept</MenuItem>
+            <MenuItem value="Product Design Concept">Product Design Concept</MenuItem>
+            <MenuItem value="Marketing Image">Marketing Image</MenuItem>
+            <MenuItem value="Social Media Marketing">Social Media Marketing</MenuItem>
           </Select>
         </Grid>
         <Grid item xs={12}>
@@ -57,7 +75,6 @@ export default function ConceptForm() {
         }
         <Grid item xs={12}>
           <TextField
-            required
             id="description"
             name="description"
             label="Simple description (Optional)"
@@ -66,6 +83,7 @@ export default function ConceptForm() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={handleChange}
           />
         </Grid>
       </Grid>

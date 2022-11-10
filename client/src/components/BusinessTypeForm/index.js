@@ -17,7 +17,7 @@ function BusinessTypeForm() {
   const { businessTypes, currentBusinessType,  currentBusinessCategory} = state;
 
   const { loading, data: buisinessTypeData } = useQuery(QUERY_BUSINESS_TYPES,{
-    variables : {businessCategory: "636b3f09e3c7f8470a1e5ee5"}
+    variables : {businessCategory: currentBusinessCategory}
     });
 
   useEffect(() => {
@@ -51,6 +51,7 @@ function BusinessTypeForm() {
     },
     );
   };
+  console.log(businessTypes);
   return (
     <>
       <InputLabel id="type">Company Type</InputLabel>
@@ -64,7 +65,7 @@ function BusinessTypeForm() {
         <MenuItem value={currentBusinessType}>{currentBusinessType}</MenuItem>
         {businessTypes.map((item) => (
         <MenuItem key={item._id} 
-                  value={item._id} 
+                  value={item.title} 
                   >{item.title}
         </MenuItem>
         ))}
