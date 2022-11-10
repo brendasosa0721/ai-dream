@@ -7,6 +7,7 @@ import Results from "./pages/Results";
 import Creation from "./pages/Creation";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import { StoreProvider } from './utils/GlobalState';
 import { setContext } from '@apollo/client/link/context';
 import {
   ApolloClient,
@@ -47,29 +48,31 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <ResponsiveAppBar/>
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/results"
-                element={<Results />}
-              />
-              <Route
-                path="/creation"
-                element={<Creation />}
-              />
-              <Route
-                path="/sign-in"
-                element={<Signin />}
-              />
-              <Route
-                path="/sign-up"
-                element={<Signup />}
-              />
-            </Routes>
-          </div>
-          <Footer />
+          <StoreProvider>
+            <ResponsiveAppBar/>
+            <div className="container">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/results"
+                  element={<Results />}
+                />
+                <Route
+                  path="/creation"
+                  element={<Creation />}
+                />
+                <Route
+                  path="/sign-in"
+                  element={<Signin />}
+                />
+                <Route
+                  path="/sign-up"
+                  element={<Signup />}
+                />
+              </Routes>
+            </div>
+            <Footer />
+          </StoreProvider>
         </div>
       </Router>
     </ApolloProvider>
