@@ -1,5 +1,5 @@
 const api = require('../utils/api');
-const { User, Creation } = require('../models');
+const { User, Creation, Product, Category, Order, BusinessCategory, BusinessType } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -110,6 +110,24 @@ const resolvers = {
       });
       return { session: session.id };
     },
+    businessCategories: async () => {
+      return await BusinessCategory.find();
+    },
+    businessTypes: async (parent, { businessCategory, name }) => {
+      const params = {};
+
+      if (businessCategory) {
+        params.businessCategory = businessCategory;
+      }
+
+      if (name) {
+        params.name = {
+          $regex: name
+        };
+      }
+
+      return (await BusinessType.find().populate('businessCategory')).filter((a) => a.businessCategory.name == businessCategory);
+    },
     api: async (parent, args, context) => {
       console.log(args.promptInput);
       // if (context.user) {
@@ -160,8 +178,33 @@ const resolvers = {
 
         return creation;
       }
-    }
-  },
+    },
+    addOrder: async (parent, { products }, context) => {
+      console.log(context);
+      if (context.user) {
+        const order = new Order({ products });
+
+        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
+
+        return order;
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+    updateProduct: async (parent, { _id, quantity }) => {
+      const decrement = Math.abs(quantity) * -1;
+
+      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+    },
+    addBusinessCategory: async (parent, args) => {
+      const businessCategory = await BusinessCategory.create(args);
+      return { businessCategory };
+    },
+    addBusinessType: async (parent, args) => {
+      const businessType = await BusinessType.create(args);
+      return { businessType };
+    },
+  }
 
 };
 

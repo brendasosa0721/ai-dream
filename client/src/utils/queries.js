@@ -80,3 +80,20 @@ export const QUERY_ALL_PRODUCTS = gql`
   }
 `;
 
+export const QUERY_BUSINESS_CATEGORIES = gql`
+{
+  businessCategories {
+    _id
+    name
+  }
+}
+`;
+
+export const QUERY_BUSINESS_TYPES = gql`
+  query businessTypes($businessCategory: ID!) {
+    businessTypes(businessCategory: $businessCategory) {
+      _id
+      title
+    }
+  }
+`;
