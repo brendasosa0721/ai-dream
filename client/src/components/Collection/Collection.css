@@ -1,0 +1,80 @@
+/*Syling Collection*/
+
+/*title styling*/
+
+.box-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-container:hover{
+    cursor: pointer;
+    background-color: transparent;
+  
+}
+
+.box-container2{
+    background-color: blue;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.box-container1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+h1{
+    font-size: 40px;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(37, 126, 210);
+    color: rgb(5, 53, 53);
+    
+}
+
+.image-list{
+  border: 1px solid rgb(47, 27, 125);
+  border-radius: 4px;
+  width: 100px;
+}
+
+.image-list:hover{
+    cursor: pointer;
+    transition: ease-in-out;
+    box-shadow: 0 0 25px 1px rgba(182, 192, 195, 0.5);
+    transform: scale(1.1); 
+   
+}
+
+/* .cart-btn{
+    background-color: rgb(23, 33, 231);
+    border-radius: 5px;
+    color: rgb(231, 229, 215);
+    font-weight: bold;
+    height: 30px;
+    cursor: pointer;
+
+}
+
+.cart-btn:hover{
+    transition: 1s ease-in-out;
+    transform: scale(1.1);
+    background-color: rgb(187, 24, 24);
+    color: black;
+}
+
+
+.cart-container p span{
+    display: inline-block;
+    border: 2px solid red;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 50%;
+} */
+
+
+
