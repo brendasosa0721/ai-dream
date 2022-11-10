@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import "./Creations.css";
 
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -27,19 +28,24 @@ export default function Creations() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 3 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    color: "blue",
+                  }}
                 >
                   <CardMedia
                     component="img"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      pt: "10",
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
@@ -49,13 +55,17 @@ export default function Creations() {
                       Heading
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      This is a media card. You can use this section to describe
+                      the content.
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <Button className="button-color" size="small">
+                      View
+                    </Button>
+                    <Button className="button-color" size="small">
+                      Download
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -63,7 +73,6 @@ export default function Creations() {
           </Grid>
         </Container>
       </main>
-
     </ThemeProvider>
   );
 }

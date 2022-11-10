@@ -1,4 +1,5 @@
 import React from "react";
+import Creations from "../components/Creations";
 
 
 export default function Results() {
@@ -6,9 +7,9 @@ export default function Results() {
   return (
     <div>
       
-      <h1>Logo Generator </h1>
+      <h1>Results </h1>
       <main>
-        <h3>Enter logo design concept</h3>
+        <Creations/>
 {/* 
         {result?.data.length > 0 ? (
         <>
