@@ -49,39 +49,16 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <ResponsiveAppBar />
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/creation" element={<Creation />} />
-              <Route path="/sign-in" element={<Signin />} />
-              <Route path="/sign-up" element={<Signup />} />
-              <Route path="/add-credits" element={<AddCredits />} />
-            </Routes>
-          </div>
-          <Footer />
           <StoreProvider>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar />
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route
-                  path="/results"
-                  element={<Results />}
-                />
-                <Route
-                  path="/creation"
-                  element={<Creation />}
-                />
-                <Route
-                  path="/sign-in"
-                  element={<Signin />}
-                />
-                <Route
-                  path="/sign-up"
-                  element={<Signup />}
-                />
+                <Route path="/results" element={<Results />} />
+                <Route path="/creation" element={<Creation />} />
+                <Route path="/sign-in" element={<Signin />} />
+                <Route path="/sign-up" element={<Signup />} />
+                <Route path="/add-credits" element={<AddCredits />} />
               </Routes>
             </div>
             <Footer />
