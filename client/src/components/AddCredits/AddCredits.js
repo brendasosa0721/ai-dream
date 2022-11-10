@@ -13,6 +13,9 @@ import CardHeader from "@material-ui/core/CardHeader";
 import "./AddCredit.css"
 import { deepPurple } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
+import { QUERY_PRODUCTS } from "../../utils/queries.js";
+import { useQuery } from "@apollo/react-hooks";
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -66,112 +69,43 @@ const StyledAvatar = styled(Avatar)`
   }
   `}
 `;
+ 
 
 export const AddCredits= React.memo(function PricingCard() {
+   const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
+   console.log("here is the", productsData)
     const classes = useStyles();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} className="grid-cntr">
-        <Grid xs={6}>
-          <Card className={classes.root}>
-            <CardHeader title="5 credits" className={classes.header} />
-            <Divider variant="middle" />
-            <CardContent>
-              <Typography variant="h4" align="center">
-                $ 5.00
-              </Typography>
-            </CardContent>
-            <Divider variant="middle" />
-            <CardActions className={classes.action}>
-              <ThemeProvider theme={customTheme}>
-                <StyledAvatar>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Buy
-                  </Button>
-                </StyledAvatar>
-              </ThemeProvider>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid xs={6}>
-          <Card className={classes.root}>
-            <CardHeader title="10 credits" className={classes.header} />
-            <Divider variant="middle" />
-            <CardContent>
-              <Typography variant="h4" align="center">
-                $ 10.00
-              </Typography>
-            </CardContent>
-            <Divider variant="middle" />
-            <CardActions className={classes.action}>
-              <ThemeProvider theme={customTheme}>
-                <StyledAvatar>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Buy
-                  </Button>
-                </StyledAvatar>
-              </ThemeProvider>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid xs={6}>
-          <Card className={classes.root}>
-            <CardHeader title="15 credits" className={classes.header} />
-            <Divider variant="middle" />
-            <CardContent>
-              <Typography variant="h4" align="center">
-                $ 15.00
-              </Typography>
-            </CardContent>
-            <Divider variant="middle" />
-            <CardActions className={classes.action}>
-              <ThemeProvider theme={customTheme}>
-                <StyledAvatar>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Buy
-                  </Button>
-                </StyledAvatar>
-              </ThemeProvider>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid xs={6}>
-          <Card className={classes.root}>
-            <CardHeader title="20 credits" className={classes.header} />
-            <Divider variant="middle" />
-            <CardContent>
-              <Typography variant="h4" align="center">
-                $ 20.00
-              </Typography>
-            </CardContent>
-            <Divider variant="middle" />
-            <CardActions className={classes.action}>
-              <ThemeProvider theme={customTheme}>
-                <StyledAvatar>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Buy
-                  </Button>
-                </StyledAvatar>
-              </ThemeProvider>
-            </CardActions>
-          </Card>
-        </Grid>
+        
+          {productsData?.products.map((product) => (
+            <Grid xs={6}>
+              <Card key= {product._id} className={classes.root}>
+              <CardHeader title={product.name + " credits"} className={classes.header} />
+              <Divider variant="middle" />
+              <CardContent>
+                <Typography variant="h4" align="center">
+                  $ {product.price}
+                </Typography>
+              </CardContent>
+              <Divider variant="middle" />
+              <CardActions className={classes.action}>
+                <ThemeProvider theme={customTheme}>
+                  <StyledAvatar>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Buy
+                    </Button>
+                  </StyledAvatar>
+                </ThemeProvider>
+              </CardActions>
+            </Card>
+          </Grid>
+          ))}
       </Grid>
     </Box>
   );

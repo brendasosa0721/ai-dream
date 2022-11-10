@@ -65,6 +65,7 @@ function ResponsiveAppBar() {
               letterSpacing: ".3rem",
               color: 'white',
               textDecoration: "none",
+              padding: "2px 0 0 0",
             }}
           >
             AI Dream
