@@ -12,7 +12,7 @@ import BusinessTypeForm from '../../components/BusinessTypeForm'
 import { useStoreContext } from '../../utils/GlobalState';
 
 export default function ConceptForm() {
-  const [state] = useStoreContext();
+  const [state, setState] = useStoreContext();
   const { currentBusinessCategory } = state;
 
   return (
