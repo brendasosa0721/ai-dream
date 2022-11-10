@@ -18,6 +18,8 @@ import {
 import "@mui/material";
 import "@emotion/react"; 
 import "@emotion/styled"
+import AddCredits from './components/AddCredits/AddCredits';
+import Creations from './components/Creations';
 
 function App() {
 
@@ -49,26 +51,15 @@ function App() {
       <Router>
         <div>
           <StoreProvider>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar />
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route
-                  path="/results"
-                  element={<Results />}
-                />
-                <Route
-                  path="/creation"
-                  element={<Creation />}
-                />
-                <Route
-                  path="/sign-in"
-                  element={<Signin />}
-                />
-                <Route
-                  path="/sign-up"
-                  element={<Signup />}
-                />
+                <Route path="/results" element={<Results />} />
+                <Route path="/creation" element={<Creation />} />
+                <Route path="/sign-in" element={<Signin />} />
+                <Route path="/sign-up" element={<Signup />} />
+                <Route path="/add-credits" element={<AddCredits />} />
               </Routes>
             </div>
             <Footer />

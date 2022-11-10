@@ -14,32 +14,37 @@ db.once('open', async () => {
 
   const products = await Product.insertMany([
     {
-      name: '50',
-      description:
-        '50 credits for creations.',
-      image: 'cookie-tin.jpg',
+      name: "50",
+      description: "50 credits for creations.",
+      image: "cookie-tin.jpg",
       category: categories[0]._id,
       price: 5,
-      quantity: 100
+      quantity: 100,
     },
     {
-      name: '150',
-      description:
-        '150 credits for creations.',
-      image: 'cookie-tin.jpg',
+      name: "150",
+      description: "150 credits for creations.",
+      image: "cookie-tin.jpg",
       category: categories[0]._id,
       price: 15,
-      quantity: 100
+      quantity: 100,
     },
     {
-      name: '350',
-      description:
-        '350 credits for creations.',
-      image: 'cookie-tin.jpg',
+      name: "350",
+      description: "350 credits for creations.",
+      image: "cookie-tin.jpg",
       category: categories[0]._id,
       price: 35,
-      quantity: 100
-    }
+      quantity: 100,
+    },
+    {
+      name: "500",
+      description: "500 credits for creations.",
+      image: "cookie-tin.jpg",
+      category: categories[0]._id,
+      price: 50,
+      quantity: 100,
+    },
   ]);
 
   console.log('products seeded');

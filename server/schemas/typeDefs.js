@@ -73,7 +73,7 @@ type Query {
   creations(username: String): [Creation]
   categories: [Category]
   product(_id: ID!): Product 
-  products(category: ID!): [Product] 
+  products: [Product] 
   order(_id: ID!): Order 
   checkout(products: [ID]!): Checkout
   businessCategories: [BusinessCategory]
