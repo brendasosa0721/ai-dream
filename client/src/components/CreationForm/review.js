@@ -1,106 +1,107 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-import { QUERY_CREATION } from "../../utils/queries";
-import { useLazyQuery } from '@apollo/react-hooks';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import toGenerate from '../../assets/to-generate.png';
+import generating from '../../assets/generating.gif';
+import {
+  UPDATE_CONCEPT_INFO
+} from '../../utils/actions';
+import { QUERY_CREATION, 
+         QUERY_CURRENT_BUSINESS_CATEGORY, 
+         QUERY_CURRENT_BUSINESS_TYPES } from "../../utils/queries";
+import { useStoreContext } from '../../utils/GlobalState';
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
 
 export default function Review() {
-  const [promptInput, setPromptInput] = React.useState("");
-  const [prompt, {loading, data, error}] = useLazyQuery(QUERY_CREATION,{
-    variables : {promptInput: promptInput}
-    }
-  );
+  const [state, dispatch] = useStoreContext();
+  const { conceptInfo, currentBusinessType,  currentBusinessCategory} = state;
+  const [formState, setFormState] = useState({ numCreations: 0, readyToOrder: false});
+  const [totalCredits, setTotalCredits] = useState(0);
+  const [numCreations, setNumCreations] = useState(0);
+  const [readyToOrder, setReadyToOrder] = useState(false);
+  
 
-  let result;
-  async function onSubmit(event) {
-    prompt();
-    event.preventDefault();
-  }
-  if (!loading) {
-    result = data?.api.data;
-    console.log(result);
-  } 
+
+
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setReadyToOrder(true);
+    setTotalCredits(value * 5);
+    setNumCreations(value);
+    setFormState({
+      ...formState,
+      [name]: value
+    });
+    dispatch({
+      type: UPDATE_CONCEPT_INFO,
+      conceptInfo: {...state.conceptInfo, [name]: value}
+    });
+    
+    dispatch({
+      type: UPDATE_CONCEPT_INFO,
+      conceptInfo: {...state.conceptInfo, readyToOrder: true}
+    });
+
+    console.log('STATE', state);
+  };
+
+
+
+
   return (
     <React.Fragment>
+      <Grid item xs={3}>
+        {!state.conceptInfo.promptLoading &&
+        <img className="hero-img" alt="" src={toGenerate} />
+        }
+        {state.conceptInfo.promptLoading &&
+        <img className="hero-img" alt="" src={generating} />
+        }
+      </Grid>  
       <Typography variant="h6" gutterBottom>
-        Review your information
+        Review and Create
       </Typography>
-      {/* <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+      <List disablePadding>
+          <ListItem  sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={conceptInfo.detailType} secondary={conceptInfo.name} />
           </ListItem>
-        ))}
-
+        <hr />
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Number of Creatons" />
+          <Select
+            labelId="numCreations"
+            id="numCreations"
+            name="numCreations"
+            disabled={state.conceptInfo.promptLoading}
+            value={numCreations}
+            onChange={handleChange}
+          >
+            <MenuItem value={0}> Select... </MenuItem>
+            <MenuItem value={1}>1 (I'm gonna get lucky) </MenuItem>
+            <MenuItem value={3}>3 (Standard) </MenuItem>
+            <MenuItem value={6}>6 (Recomended)</MenuItem>
+            <MenuItem value={12}>12 (Safer option)</MenuItem>
+          </Select>
+        </ListItem>
+
+        <Grid item xs={12}>
+
+        </Grid>
+        <hr />
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText primary="Total Credits" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+            {totalCredits}
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid> */}
     </React.Fragment>
   );
 }

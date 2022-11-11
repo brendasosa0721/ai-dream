@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React , {useEffect, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,6 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Concept from './concept';
 import { Layout } from './layout';
 import Review from './review';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { useStoreContext } from '../../utils/GlobalState';
+import { QUERY_CREATION } from "../../utils/queries";
+import {
+  UPDATE_CONCEPT_INFO,
+  API_RESULTS
+} from '../../utils/actions';
 
 
 const steps = ['Concept', 'Layout', 'Review'];
@@ -35,7 +42,11 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function InputForm() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [state, dispatch] = useStoreContext();
+  const { conceptInfo } = state;
+  // const [formState, setFormState] = useState({ promptLoading: false});
+
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -44,6 +55,44 @@ export default function InputForm() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const [prompt, {loading, data, error}] = useLazyQuery(QUERY_CREATION,{
+    variables : {promptInput: JSON.stringify(state.conceptInfo)}
+    }
+  );
+
+  let result;
+
+    
+  useEffect(() => {
+    if (!loading) {
+      result = data?.api.data;
+  
+      console.log(result);
+      dispatch({
+        type: API_RESULTS,
+        apiResults: {results: result }
+      })
+    }
+  },[loading])
+
+  
+  
+  async function handleGenerate(event) {
+    event.preventDefault();
+    // setFormState({
+    //   ...formState,
+    //   promptLoading: true
+    // });
+    dispatch({
+      type: UPDATE_CONCEPT_INFO,
+      conceptInfo: {...state.conceptInfo, promptLoading: true}
+    })
+    prompt();
+
+  }
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,13 +143,27 @@ export default function InputForm() {
                   </Button>
                 )}
 
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                </Button>
+                { !state.conceptInfo.readyToOrder &&
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    sx={{ mt: 3, ml: 1 }}
+                    disabled={activeStep === steps.length - 1}
+                  >
+                    {activeStep === steps.length - 1 ? 'Get Ready' : 'Next'}
+                  </Button>
+                }
+                { state.conceptInfo.readyToOrder &&
+                  <Button
+                    variant="contained"
+                    onClick={handleGenerate}
+                    sx={{ mt: 3, ml: 1 }}
+                    disabled={state.conceptInfo.promptLoading}
+                  >
+                    {activeStep === steps.length - 1 ? 'Design it!' : 'Next'}
+                  </Button>
+                }
+
               </Box>
             </React.Fragment>
           )}

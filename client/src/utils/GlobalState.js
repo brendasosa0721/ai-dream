@@ -13,7 +13,8 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentBusinessCategory: 'Select category...',
     businessTypes: [],
     currentBusinessType: 'Select type...',
-    conceptInfo: []
+    conceptInfo: [{readyToOrder: false}],
+    apiResults: []
   });
 
   return <Provider value={[state, dispatch]} {...props} />;
