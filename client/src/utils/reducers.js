@@ -10,7 +10,8 @@ import {
   UPDATE_CURRENT_BUSINESS_CATEGORY,
   UPDATE_BUSINESS_TYPES,
   UPDATE_CURRENT_BUSINESS_TYPE,
-  UPDATE_CONCEPT_INFO
+  UPDATE_CONCEPT_INFO,
+  API_RESULTS
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -93,6 +94,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         conceptInfo: action.conceptInfo
+      };
+
+    case API_RESULTS:
+      return {
+        ...state,
+        apiResults: action.apiResults
       }
 
     default:

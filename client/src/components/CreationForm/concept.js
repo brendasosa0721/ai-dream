@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -16,9 +16,9 @@ import {
 
 export default function ConceptForm() {
   const [state, dispatch] = useStoreContext();
-
   const { currentBusinessCategory } = state;
-  const [formState, setFormState] = useState({ name: '', type: '', description: '' });
+  const [formState, setFormState] = useState({ name: '', type: '', description: '',  detailType: 'Select'});
+  const [type, setType] = useState('image');
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -28,9 +28,20 @@ export default function ConceptForm() {
     });
     dispatch({
       type: UPDATE_CONCEPT_INFO,
-      conceptInfo: formState
+      conceptInfo: {...formState, [name]: value}
     })
+    if (value === 'Logo Design Concept'){setType("logo");}
+    if (value === 'Product Design Concept'){setType("product");}
+    if (value === 'Social Media Marketing'){setType("image");}
+    if (value === 'General Purpose Image'){setType("image");}
   };
+
+  useEffect(() => {
+    dispatch({
+      type: UPDATE_CONCEPT_INFO,
+      conceptInfo: {...formState, type: type}
+    })
+  },[formState])
 
   return (
     <React.Fragment>
@@ -50,19 +61,23 @@ export default function ConceptForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <InputLabel id="type">Type of Creation</InputLabel>
+          <InputLabel id="detailType">Type of Creation</InputLabel>
           <Select
-            labelId="type"
-            id="type"
-            name="type"
-            label="Type"
-            value="Logo Design Concept"
+            labelId="detailType"
+            id="detailType"
+            name="detailType"
+            label="detailType"
+            value={formState.detailType}
+          
             onChange={handleChange}
           >
+            
+            <MenuItem value="Select">Select type of creation...</MenuItem>
             <MenuItem value="Logo Design Concept">Logo Design Concept</MenuItem>
             <MenuItem value="Product Design Concept">Product Design Concept</MenuItem>
-            <MenuItem value="Marketing Image">Marketing Image</MenuItem>
             <MenuItem value="Social Media Marketing">Social Media Marketing</MenuItem>
+            <MenuItem value="General Purpose Image">General Purpose Image</MenuItem>
+
           </Select>
         </Grid>
         <Grid item xs={12}>
@@ -77,15 +92,14 @@ export default function ConceptForm() {
           <TextField
             id="description"
             name="description"
-            label="Simple description (Optional)"
-            multiline
-            rows={5}
+            label={"Short description of your "+ type}
             fullWidth
             autoComplete="given-name"
+            placeholder=''
             variant="standard"
             onChange={handleChange}
           />
-        </Grid>
+        </Grid> 
       </Grid>
     </React.Fragment>
   );

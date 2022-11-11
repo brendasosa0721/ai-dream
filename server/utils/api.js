@@ -15,14 +15,15 @@ module.exports = {
       n: 1,
       size: "512x512",
     });
- 
     generatePrompt(req.prompt);
     return result;
   }
 }
 
-function generatePrompt(logo) {
-  let specialPrompt = "logo design concept " + logo;
+function generatePrompt(data) {
+  obj = JSON.parse(data);
+  console.log(obj);
+  let specialPrompt = "logo design concept " + data;
   return specialPrompt;
 }
 
