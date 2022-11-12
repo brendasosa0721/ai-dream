@@ -11,14 +11,12 @@
 .box-container:hover{
     cursor: pointer;
     background-color: transparent;
-  
 }
 
 .box-container2{
     background-color: blue;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: center;  
 }
 
 .box-container1{

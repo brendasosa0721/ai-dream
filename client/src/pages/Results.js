@@ -1,25 +1,118 @@
-import React from "react";
-import Creations from "../components/Creations";
+import React, { useState } from 'react';
+import ImageListItem from '@mui/material/ImageListItem';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
+import CloseIcon from '@material-ui/icons/Close'
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 2,
+};
 
 
-export default function Results() {
+
+export default function TitlebarImageList() {
+  const urlData = JSON.parse(localStorage.getItem('creations'));
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState();
+  
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+  const openModal = (image) => {
+    setModalOpen(true);
+    setModalImage(image);
+  }
+  const handleClick = e => {
+    e.stopPropagation();
+  };
+
+
+
+  const imageData = [];
+  console.log(urlData.data);
+  if(urlData.data.length !== 0){
+    urlData.data.forEach(element => {
+      console.log(element.url);
+      imageData.push(element.url);
+    });
+  }
+
+
+  console.log(imageData);
 
   return (
-    <div>
-      
-      <h1>Results </h1>
-      <main>
-        <Creations/>
-{/* 
-        {result?.data.length > 0 ? (
-        <>
-          <hr />
-          <div>
-            <img src={result.data[0].url} alt="logo design concept" />
-          </div>
-        </>
-        ):''} */}
-      </main>
-    </div>
+    
+    <>
+    <AppBar
+        position="absolute"
+        color="default"
+        elevation={0}
+        sx={{
+          position: 'relative',
+          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+        }}
+      >
+      <Toolbar>
+        <Typography variant="h6" color="inherit" noWrap>
+          Results
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    <Grid container justifyContent="space-around" sx={{mt: 3, mb: 5}}>
+        {imageData.map((item) => (
+          <ImageListItem className='thumbnail' key={item} sx={{m: 2}}>
+            <img
+              onClick={() => openModal(item)}
+              
+              src={`${item}`}
+              alt={'img'}
+              loading='lazy'
+            />
+
+          </ImageListItem>
+        ))}
+    </Grid>
+    <Dialog
+        disableEscapeKeyDown
+        onClick={handleClick}
+        open={modalOpen}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+      <Grid container justifyContent="flex-end">
+        <CloseIcon onClick={closeModal} />
+      </Grid>
+      <img width="600px" 
+        src={`${modalImage}`}
+        alt={'img'}
+        loading="lazy"
+      />
+      <Grid container justifyContent="flex-end">
+        <Button
+                type="submit"
+                variant="contained"
+                sx={{ mt: 1, mb: 2, mr: 2 }}
+              >
+                Add to Collections
+        </Button>
+      </Grid>
+    </Dialog>
+  </>
   );
+  
 }
+
+
+

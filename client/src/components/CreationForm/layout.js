@@ -4,9 +4,6 @@ import Paper from "@mui/material/Paper";
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { GithubPicker } from 'react-color';
 import InputLabel from '@mui/material/InputLabel';
@@ -51,23 +48,22 @@ export function Layout() {
                   'close-up', 'extreme close-up'];
 
   const [state, dispatch] = useStoreContext();
-  const [formState, setFormState] = useState({ pColor: '', sColor: '',logoStyle: logoStyle[0], style: style[0], imageDetail: detail[0], 
-                                               art: art[0], technique: technique[0], camera: camera[0]});
+  const [formState, setFormState] = useState({ pColor: '', sColor: '',logoStyle: 0, style: 0, imageDetail: 0, 
+                                               art: 0, technique: 0, camera: 0});
 
   const [primaryColor, setPrimaryColor] = useState(0);
   const [secondaryColor, setSecondaryColor] = useState(0);
-  const handleChangePrimary = (value1) => {
-    setPrimaryColor(value1);
-    let pColor = colorToText(value1.hex)
+  const handleChangePrimary = (value) => {
+    setPrimaryColor(value);
+    let pColor = colorToText(value.hex)
     dispatch({
       type: UPDATE_CONCEPT_INFO,
       conceptInfo: {...state.conceptInfo, pColor: pColor }
     })
   };
-  const handleChangeSecondary = (value2) => {
-    setSecondaryColor(value2);
-    setPrimaryColor(value2);
-    let sColor = colorToText(value2.hex)
+  const handleChangeSecondary = (value) => {
+    setSecondaryColor(value);
+    let sColor = colorToText(value.hex)
     dispatch({
       type: UPDATE_CONCEPT_INFO,
       conceptInfo: {...state.conceptInfo, sColor: sColor }
@@ -151,7 +147,7 @@ export function Layout() {
             </Item>
           </Grid>            
           <Grid item xs={12}>
-            <InputLabel id="logoStyle">Select a Style</InputLabel>
+            <InputLabel id="logoStyle">Select a Style (Optional)</InputLabel>
             <Select
               labelId="logoStyle"
               id="logoStyle"
@@ -160,6 +156,10 @@ export function Layout() {
               value={formState.logoStyle}
               onChange={handleForm}
               >
+              <MenuItem key={0} 
+                        value={0}
+                        >Select...
+              </MenuItem>
               {logoStyle.map((item) => (
                 <MenuItem key={item} 
                           value={item} 
@@ -172,7 +172,7 @@ export function Layout() {
       }
         { state.conceptInfo.type !== 'logo' &&
           <Grid item xs={12}>
-            <InputLabel id="style">Select a Style</InputLabel>
+            <InputLabel id="style">Select a Style (Optional)</InputLabel>
             <Select
               labelId="style"
               id="style"
@@ -181,6 +181,10 @@ export function Layout() {
               value={formState.style}
               onChange={handleForm}
               >
+              <MenuItem key={0} 
+                    value={0}
+                    >Select...
+              </MenuItem>
               {style.map((item) => (
                 <MenuItem key={item} 
                           value={item} 
@@ -192,7 +196,7 @@ export function Layout() {
         }
         <Grid item xs={12} md={6}>
           <Box my={4}>
-            <InputLabel id="type">Suggest a primary color</InputLabel>
+            <InputLabel id="type">Primary Color (Opional)</InputLabel>
             <hr />
             <div>
               <GithubPicker value={primaryColor} onChange={handleChangePrimary} />
@@ -200,7 +204,6 @@ export function Layout() {
           </Box>
 
           <TextField
-            required
             id="primary"
             label={primaryColor.hex}
             fullWidth
@@ -210,7 +213,7 @@ export function Layout() {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box my={4}>
-            <InputLabel id="type">Suggest a secondary color</InputLabel>
+            <InputLabel id="type">Secondary Color (Opional)</InputLabel>
             <hr />
             <div>
               <GithubPicker value={secondaryColor} onChange={handleChangeSecondary} />
@@ -218,18 +221,18 @@ export function Layout() {
           </Box>
 
           <TextField
-            required
-            id="primary"
+            id="secondary"
             label={secondaryColor.hex}
             fullWidth
             autoComplete="cc-name"
             variant="standard"
           />
         </Grid>
+
         { state.conceptInfo.type !== 'logo' &&
         <>
           <Grid item xs={12}>
-            <InputLabel id="imageDetail">Select Image Detail</InputLabel>
+            <InputLabel id="imageDetail">Select Image Detail (Optional)</InputLabel>
             <Select
               labelId="imageDetail"
               id="imageDetail"
@@ -238,6 +241,10 @@ export function Layout() {
               name="imageDetail"
               onChange={handleForm}
               >
+             <MenuItem key={0} 
+                        value={0}
+                        >Select...
+              </MenuItem>
               {detail.map((item) => (
                 <MenuItem key={item} 
                           value={item} 
@@ -247,7 +254,7 @@ export function Layout() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <InputLabel id="technique">Select Technique</InputLabel>
+            <InputLabel id="technique">Select Technique (Optional)</InputLabel>
             <Select
               labelId="technique"
               id="technique"
@@ -257,6 +264,10 @@ export function Layout() {
               onChange={handleForm}
 
               >
+             <MenuItem key={0} 
+                        value={0}
+                        >Select...
+              </MenuItem>
               {technique.map((item) => (
                 <MenuItem key={item} 
                           value={item} 
@@ -266,7 +277,7 @@ export function Layout() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <InputLabel id="type">Select Art Style</InputLabel>
+            <InputLabel id="type">Select Art Style (Optional)</InputLabel>
             <Select
               labelId="art"
               id="art"
@@ -276,6 +287,10 @@ export function Layout() {
               onChange={handleForm}
 
               >
+             <MenuItem key={0} 
+                        value={0}
+                        >Select...
+              </MenuItem>
               {art.map((item) => (
                 <MenuItem key={item} 
                           value={item} 
@@ -285,7 +300,7 @@ export function Layout() {
             </Select>
           </Grid>
           <Grid item xs={12}>
-            <InputLabel id="camera">Select Camera View</InputLabel>
+            <InputLabel id="camera">Select Camera View (Optional)</InputLabel>
             <Select
               labelId="camera"
               id="camera"
@@ -295,6 +310,10 @@ export function Layout() {
               onChange={handleForm}
 
               >
+             <MenuItem key={0} 
+                        value={0}
+                        >Select...
+              </MenuItem>
               {camera.map((item) => (
                 <MenuItem key={item} 
                           value={item} 

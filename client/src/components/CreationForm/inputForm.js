@@ -44,7 +44,6 @@ const theme = createTheme();
 export default function InputForm() {
   const [state, dispatch] = useStoreContext();
   const { conceptInfo } = state;
-  // const [formState, setFormState] = useState({ promptLoading: false});
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -57,7 +56,7 @@ export default function InputForm() {
   };
 
   const [prompt, {loading, data, error}] = useLazyQuery(QUERY_CREATION,{
-    variables : {promptInput: JSON.stringify(state.conceptInfo)}
+    variables : {promptInput: JSON.stringify(state)}
     }
   );
 
@@ -68,11 +67,12 @@ export default function InputForm() {
     if (!loading) {
       result = data?.api.data;
   
-      console.log(result);
-      dispatch({
-        type: API_RESULTS,
-        apiResults: {results: result }
-      })
+      if (result) {
+        localStorage.setItem('creations', JSON.stringify(result));
+        window.location.assign("/results");
+      }
+      
+      
     }
   },[loading])
 

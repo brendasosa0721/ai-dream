@@ -13,7 +13,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentBusinessCategory: 'Select category...',
     businessTypes: [],
     currentBusinessType: 'Select type...',
-    conceptInfo: [{readyToOrder: false}],
+    conceptInfo: [{readyToOrder: false, businessType: null, businessCategory: null}],
     apiResults: []
   });
 

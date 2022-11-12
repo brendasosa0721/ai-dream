@@ -5,8 +5,6 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import BusinessCategoryForm from '../../components/BusinessCategoryForm'
 import BusinessTypeForm from '../../components/BusinessTypeForm'
 import { useStoreContext } from '../../utils/GlobalState';
@@ -49,20 +47,21 @@ export default function ConceptForm() {
         Creation Description
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             required
             id="name"
             name="name"
-            label="Name of your creation"
+            label="Name of your creation (Will not affect the result.)"
             fullWidth
             variant="standard"
             onChange={handleChange}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <InputLabel id="detailType">Type of Creation</InputLabel>
           <Select
+            required
             labelId="detailType"
             id="detailType"
             name="detailType"
@@ -71,13 +70,11 @@ export default function ConceptForm() {
           
             onChange={handleChange}
           >
-            
             <MenuItem value="Select">Select type of creation...</MenuItem>
             <MenuItem value="Logo Design Concept">Logo Design Concept</MenuItem>
             <MenuItem value="Product Design Concept">Product Design Concept</MenuItem>
             <MenuItem value="Social Media Marketing">Social Media Marketing</MenuItem>
             <MenuItem value="General Purpose Image">General Purpose Image</MenuItem>
-
           </Select>
         </Grid>
         <Grid item xs={12}>
@@ -92,10 +89,10 @@ export default function ConceptForm() {
           <TextField
             id="description"
             name="description"
-            label={"Short description of your "+ type}
+            label={"Short description of your "+ type +" (Optional)"}
             fullWidth
             autoComplete="given-name"
-            placeholder=''
+            placeholder='Joystick for video games / Wolf in the forest'
             variant="standard"
             onChange={handleChange}
           />

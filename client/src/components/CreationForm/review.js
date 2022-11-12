@@ -41,15 +41,13 @@ export default function Review() {
     });
     dispatch({
       type: UPDATE_CONCEPT_INFO,
-      conceptInfo: {...state.conceptInfo, [name]: value}
-    });
-    
-    dispatch({
-      type: UPDATE_CONCEPT_INFO,
-      conceptInfo: {...state.conceptInfo, readyToOrder: true}
+      conceptInfo: {...state.conceptInfo, [name]: value, readyToOrder: true}
     });
 
-    console.log('STATE', state);
+
+    
+
+
   };
 
 

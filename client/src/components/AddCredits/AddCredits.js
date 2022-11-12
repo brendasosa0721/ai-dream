@@ -15,6 +15,8 @@ import { deepPurple } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import { QUERY_PRODUCTS } from "../../utils/queries.js";
 import { useQuery } from "@apollo/react-hooks";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -76,38 +78,56 @@ export const AddCredits= React.memo(function PricingCard() {
    console.log("here is the", productsData)
     const classes = useStyles();
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2} className="grid-cntr">
-        
-          {productsData?.products.map((product) => (
-            <Grid xs={6}>
-              <Card key= {product._id} className={classes.root}>
-              <CardHeader title={product.name + " credits"} className={classes.header} />
-              <Divider variant="middle" />
-              <CardContent>
-                <Typography variant="h4" align="center">
-                  $ {product.price}
-                </Typography>
-              </CardContent>
-              <Divider variant="middle" />
-              <CardActions className={classes.action}>
-                <ThemeProvider theme={customTheme}>
-                  <StyledAvatar>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Buy
-                    </Button>
-                  </StyledAvatar>
-                </ThemeProvider>
-              </CardActions>
-            </Card>
-          </Grid>
-          ))}
-      </Grid>
-    </Box>
+    <>
+      <AppBar
+          position="absolute"
+          color="default"
+          elevation={0}
+          sx={{
+            position: 'relative',
+            mb: 4,
+            borderBottom: (t) => `1px solid ${t.palette.divider}`,
+          }}
+        >
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            Add Credits
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2} className="grid-cntr">
+          
+            {productsData?.products.map((product) => (
+              <Grid container justifyContent="space-around" xs={5} sx={{m: 3}}>
+                <Card key= {product._id} className={classes.root}>
+                <CardHeader title={product.name + " credits"} className={classes.header} />
+                <Divider variant="middle" />
+                <CardContent>
+                  <Typography variant="h4" align="center">
+                    $ {product.price}
+                  </Typography>
+                </CardContent>
+                <Divider variant="middle" />
+                <CardActions className={classes.action}>
+                  <ThemeProvider theme={customTheme}>
+                    <StyledAvatar>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                      >
+                        Buy
+                      </Button>
+                    </StyledAvatar>
+                  </ThemeProvider>
+                </CardActions>
+              </Card>
+            </Grid>
+            ))}
+        </Grid>
+      </Box>
+    </>
   );
 })
 export default AddCredits

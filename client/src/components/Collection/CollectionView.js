@@ -7,11 +7,13 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 // import Cart from "../Collection/Cart"
 import "./Collection.css";
-
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import AppBar from '@mui/material/AppBar';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -24,52 +26,66 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function FullWidthGrid() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <h1>Welcome to your AI COLLECTION</h1>
+    <>
+      <AppBar
+          position="absolute"
+          color="default"
+          elevation={0}
+          sx={{
+            position: 'relative',
+            mb: 4,
+            borderBottom: (t) => `1px solid ${t.palette.divider}`,
+          }}
+        >
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            My Collections
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <div className="box-container1">
+            <Grid item xs={6} md={4} className="box-container">
+              <ImageList
+                sx={{ width: 800, height: 450 }}
+                cols={2}
+                className="image-list"
+              >
+                {itemData.map((item) => (
+                  <ImageListItem key={item.img} className="box-container2">
+                    <img
+                      src={`${item.img}?w=248&fit=crop&auto=format`}
+                      srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.title}
+                      loading="lazy"
+                    />
+
+                    <ImageListItemBar
+                      title={item.title}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: "white" }}
+                          aria-label={`add to the cart ${item.title}`}
+                        >
+                          <AddCircleOutlinedIcon />
+                          <StarBorderIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Grid>
+          </div>
+
+          {/* <Grid className="cart" item xs={6} md={4} style={{ display: "inline-block" , border: "1px solid black" , borderRadius: "10px", height:"fit-content" , width:"fit-content" , paddingBottom: "10px"}}>
+            <Cart />
+          </Grid> */}
+          <Grid item xs={6} md={8}></Grid>
         </Grid>
-
-        <div className="box-container1">
-          <Grid item xs={6} md={4} className="box-container">
-            <ImageList
-              sx={{ width: 800, height: 450 }}
-              cols={2}
-              className="image-list"
-            >
-              {itemData.map((item) => (
-                <ImageListItem key={item.img} className="box-container2">
-                  <img
-                    src={`${item.img}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt={item.title}
-                    loading="lazy"
-                  />
-
-                  <ImageListItemBar
-                    title={item.title}
-                    actionIcon={
-                      <IconButton
-                        sx={{ color: "white" }}
-                        aria-label={`add to the cart ${item.title}`}
-                      >
-                        <AddCircleOutlinedIcon />
-                        <StarBorderIcon />
-                      </IconButton>
-                    }
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Grid>
-        </div>
-
-        {/* <Grid className="cart" item xs={6} md={4} style={{ display: "inline-block" , border: "1px solid black" , borderRadius: "10px", height:"fit-content" , width:"fit-content" , paddingBottom: "10px"}}>
-          <Cart />
-        </Grid> */}
-        <Grid item xs={6} md={8}></Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 }
 

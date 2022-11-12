@@ -57,7 +57,7 @@ function BusinessCategoryForm() {
   };
   return (
     <>
-      <InputLabel id="type">Company Category</InputLabel>
+      <InputLabel id="type">Company Category (Optional)</InputLabel>
       <Select
         labelId="type"
         id="type"

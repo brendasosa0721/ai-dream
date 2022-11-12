@@ -1,0 +1,16 @@
+
+body {
+    display: block;
+    margin: 0px;
+}
+
+.thumbnail {
+  transition: transform .2s; 
+  width: 270px;
+  height: 270px;
+  margin: 0 auto;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05); 
+}
