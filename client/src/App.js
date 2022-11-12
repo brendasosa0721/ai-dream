@@ -64,7 +64,7 @@ function App() {
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
-                <Route path="/How-It-Works" element={<HowItWorks />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
               </Routes>
             </div>
             <Footer />
