@@ -102,12 +102,18 @@ export default function HowItWorks() {
         </Toolbar>
       </AppBar>
 
-        <div>
-          <p>loremjkhvkclvkcxlbkcjvlcxjvcxl;vjcxlvjcxlvjcxlvjcxlvcxjvlcxjvlcxvjcxlvjxclvjxlvjx
-            kjvxclvjcxlvjcxlvjcxlvjcxvlcxjvlcjvlcjvlxcvjxclvjxlvjxlvjxlvjxlvjxlvjxlvxjcvlljvlxjxv
-            kvjlxkvjlxjvlxvjxlvjxlvjxljvlxvjxljvlxvjlxvjlvjlxjvlxjvlxvjlxvjxlvjlxvjlljvx
+      <div id="text-containter">
+        <Typography variant="h4" component="span">
+          <p id="animate-character">
+            AI Dream is here to make your business idea come true.
+            <br />
+            Tell us what you want and AI will make it for you.
+            <br />
+            Don't be shy and be creative.
           </p>
-        </div>
+        </Typography>
+      </div>
+
       <Timeline position="alternate" id="timeline-container">
         <TimelineItem>
           <TimelineOppositeContent
@@ -115,22 +121,22 @@ export default function HowItWorks() {
             align="right"
             variant="body2"
             color="text.secondary"
-          >
-            
-          </TimelineOppositeContent>
+          ></TimelineOppositeContent>
           <TimelineSeparator>
-            <TimelineConnector />
+            <TimelineConnector id="connector" />
             <TimelineDot>
-            <LaptopMacIcon sx={{ height: "100px", width: "100px" }} />
+              <LaptopMacIcon
+                sx={{ height: "100px", width: "100px" }}
+                id="fill"
+              />
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
 
-          <TimelineContent sx={{ py: "70px", px: 2 }}>
+          <TimelineContent sx={{ py: "100px", px: 2 }}>
             <Typography variant="h6" component="span">
               Register
             </Typography>
-           
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -138,18 +144,20 @@ export default function HowItWorks() {
             sx={{ m: "auto 0" }}
             variant="body2"
             color="text.secondary"
-          >
-          
-          </TimelineOppositeContent>
+          ></TimelineOppositeContent>
+
           <TimelineSeparator>
-            <TimelineConnector />
+            <TimelineConnector id="connector" />
             <TimelineDot color="primary">
-              <ShoppingCartSharpIcon sx={{ height: "100px", width: "100px" }} />
+              <ShoppingCartSharpIcon
+                sx={{ height: "100px", width: "100px" }}
+                id="fill"
+              />
             </TimelineDot>
-            <TimelineConnector />
+            <TimelineConnector id="connector" />
           </TimelineSeparator>
 
-          <TimelineContent sx={{ py: "70px", px: 2 }}>
+          <TimelineContent sx={{ py: "100px", px: 2 }}>
             <Typography variant="h6" component="span">
               Buy your credits
             </Typography>
@@ -157,14 +165,20 @@ export default function HowItWorks() {
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineConnector />
+            <TimelineConnector id="connector" />
             <TimelineDot color="primary" variant="outlined">
-              <BorderColorSharpIcon sx={{ height: "100px", width: "100px" }} />
+              <BorderColorSharpIcon
+                sx={{ height: "100px", width: "100px" }}
+                id="fill"
+              />
             </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+            <TimelineConnector
+              sx={{ bgcolor: "secondary.main" }}
+              id="connector"
+            />
           </TimelineSeparator>
 
-          <TimelineContent sx={{ py: "70px", px: 2 }}>
+          <TimelineContent sx={{ py: "100px", px: 2 }}>
             <Typography variant="h6" component="span">
               Get ready to create
             </Typography>
@@ -172,16 +186,22 @@ export default function HowItWorks() {
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
+            <TimelineConnector
+              sx={{ bgcolor: "secondary.main" }}
+              id="connector"
+            />
             <TimelineDot color="secondary">
-              <CollectionsSharpIcon sx={{ height: "100px", width: "100px" }} />
+              <CollectionsSharpIcon
+                sx={{ height: "100px", width: "100px" }}
+                id="fill"
+              />
             </TimelineDot>
-            <TimelineConnector />
+            <TimelineConnector id="connector" />
           </TimelineSeparator>
 
-          <TimelineContent sx={{ py: "70px", px: 2 }}>
+          <TimelineContent sx={{ py: "100px", px: 2 }}>
             <Typography variant="h6" component="span">
-              Access your ideas collection
+              Access your collection
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -195,11 +215,6 @@ export default function HowItWorks() {
         >
           Get Started
         </Button>
-      </div>
-
-
-      <div>
-        
       </div>
     </>
   );
