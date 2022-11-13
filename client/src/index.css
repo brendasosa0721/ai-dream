@@ -11,7 +11,6 @@ body {
 }
 
 .thumbnail:hover {
-<<<<<<< HEAD
   transform: scale(1.05);
 }
 
@@ -71,11 +70,7 @@ body {
 #price-image{
 width: 1920px;
 }
-=======
-  transform: scale(1.05); 
-}
 
-/*Styling the How It Works Page*/
 
 /*Styling to the icon*/
 #fill{
@@ -198,4 +193,3 @@ text-align: center;
     }
   }
   
->>>>>>> feature/howitworks
