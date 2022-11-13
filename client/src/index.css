@@ -14,3 +14,44 @@ body {
 .thumbnail:hover {
   transform: scale(1.05); 
 }
+
+/*Styling the How It Works Page*/
+
+#btn-hiw{
+
+  justify-content: center;
+  align-items: center;
+ text-align: center;
+  display: flex;
+ padding: 45px;
+ left: 50%;
+ bottom: 200px;
+  
+}
+
+#btn-started{
+  font-size: 25px;
+  border-radius: 40px;
+  box-shadow: 10px 10px 30px rgb(89, 2, 127);
+  margin-bottom:200px;
+  top: 150px;
+  
+}
+
+#timeline-container{
+transform: translate(-100%,-100%);
+opacity: 1;
+animation: fade-timeline-in 1s ease 1 1s forwards;
+justify-content: center;
+align-items: center;
+display: flex;
+flex-direction: row;
+
+} 
+
+@keyframes fade-timeline-in{
+    to{
+        transform: translate(0%, 50%);
+    }
+}
+
