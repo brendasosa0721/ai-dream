@@ -43,6 +43,9 @@ const typeDefs = gql`
     _id: ID
     purchaseDate: String
     products: [Product]
+    user: ID
+    session:ID
+    status: String
   }
 
   type Checkout {
@@ -87,6 +90,7 @@ const typeDefs = gql`
     restCredits(credits: Int!): User
     addCreation(creationText: String!, url: String!): Creation
     addOrder(products: [ID]!): Order
+    updateOrder(sessionId: String): Order
     updateProduct(_id: ID!, quantity: Int!): Product
     addBusinessCategory(name: String!): BusinessCategory
     addBusinessType(title: String!, BusinessCategory: ID!): BusinessType
