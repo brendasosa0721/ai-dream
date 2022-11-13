@@ -11,6 +11,7 @@ body {
 }
 
 .thumbnail:hover {
+<<<<<<< HEAD
   transform: scale(1.05);
 }
 
@@ -70,3 +71,131 @@ body {
 #price-image{
 width: 1920px;
 }
+=======
+  transform: scale(1.05); 
+}
+
+/*Styling the How It Works Page*/
+
+/*Styling to the icon*/
+#fill{
+ animation-name: fillAction;
+        animation-iteration-count: 1;
+        animation-timing-function: cubic-bezier(.2, .6, .8, .4);
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
+        mix-blend-mode:screen;
+}
+
+
+  @keyframes fillAction {
+    0% {
+      transform: translate(0, 25px);
+    }
+    50% {
+      transform: translate(0, -25px);
+    }
+  }
+
+/* Styling the text content */
+#text-containter{
+text-align: center;
+justify-content: center;
+align-items: center;
+letter-spacing: 3px;
+padding: 5px;
+
+}
+
+
+#animate-character{
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 50px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/*Button Styling*/
+#btn-hiw{
+
+  justify-content: center;
+  align-items: center;
+ text-align: center;
+  display: flex;
+ padding: 45px;
+ left: 50%;
+ bottom: 200px;
+  
+}
+#btn-started{
+  font-size: 25px;
+  border-radius: 40px;
+  box-shadow: 8px 8px 15px rgb(89, 2, 127);
+  margin-bottom:300px;
+  top: 200px;
+  
+}
+
+
+
+/*Media Query for the Timeline Container*/
+@media only screen and (max-width:600px)
+{
+  #text-containter p{
+    font-size: 30px;
+
+  }
+}
+
+@media only screen and (max-width:600px)
+{
+  #btn-hiw{
+display: flex;
+justify-content: center;
+margin: 0 auto;
+max-width: 50%;
+text-align: center;
+
+  }
+}
+
+@media only screen  and (max-width:600px)
+{
+  #btn-started{
+    font-size: 18px;
+  }
+}
+ @media only screen  and (max-width:600px) 
+  {
+   #timeline-container{
+    max-width: 100%;
+    display:block;
+    justify-content: center;
+    align-items: center;
+
+  
+    
+    }
+  }
+  
+>>>>>>> feature/howitworks

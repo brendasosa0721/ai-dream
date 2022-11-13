@@ -20,7 +20,11 @@ import "@mui/material";
 import "@emotion/react"; 
 import "@emotion/styled"
 import AddCredits from './components/AddCredits/AddCredits';
+<<<<<<< HEAD
 import Pricing from './pages/Pricing';
+=======
+import HowItWorks from './pages/HowItWorks';
+>>>>>>> feature/howitworks
 
 
 function App() {
@@ -64,7 +68,11 @@ function App() {
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
+<<<<<<< HEAD
                 <Route path="/pricing" element={<Pricing/>} />
+=======
+                <Route path="/how-it-works" element={<HowItWorks />} />
+>>>>>>> feature/howitworks
               </Routes>
             </div>
             <Footer />
