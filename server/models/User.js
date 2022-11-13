@@ -20,12 +20,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    credits: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Credits'
-        }
-    ],
+    credits: {
+          type: Number,
+          default: 0
+    },
     creations: [
       {
         type: Schema.Types.ObjectId,

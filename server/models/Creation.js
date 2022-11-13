@@ -11,7 +11,8 @@ const creationSchema = new Schema(
     creationUrl: {
       type: String,
       minlength: 1,
-      maxlength: 280
+      maxlength: 280,
+      unique: true
     },
     createdAt: {
       type: Date,

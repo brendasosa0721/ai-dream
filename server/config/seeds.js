@@ -14,7 +14,7 @@ db.once('open', async () => {
 
   const products = await Product.insertMany([
     {
-      name: "50",
+      name: "50 Credits",
       description: "50 credits for creations.",
       image: "cookie-tin.jpg",
       category: categories[0]._id,
@@ -22,15 +22,15 @@ db.once('open', async () => {
       quantity: 100,
     },
     {
-      name: "150",
-      description: "150 credits for creations.",
+      name: "150 Credits",
+      description: "1",
       image: "cookie-tin.jpg",
       category: categories[0]._id,
       price: 15,
       quantity: 100,
     },
     {
-      name: "350",
+      name: "350 Credits",
       description: "350 credits for creations.",
       image: "cookie-tin.jpg",
       category: categories[0]._id,
@@ -38,7 +38,7 @@ db.once('open', async () => {
       quantity: 100,
     },
     {
-      name: "500",
+      name: "500 Credits",
       description: "500 credits for creations.",
       image: "cookie-tin.jpg",
       category: categories[0]._id,

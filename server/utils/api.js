@@ -85,7 +85,6 @@ function generatePrompt(obj) {
               ${obj.conceptInfo.technique}, ${obj.conceptInfo.art}, ${obj.conceptInfo.camera}}` 
   }
 
-  console.log(propmt);
  
   return propmt;
 }

@@ -7,7 +7,7 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    totalCredits: Int
+    credits: Int
     creations: [Creation]
   }
 
@@ -83,7 +83,8 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addCredits(totalCredits: Int!): User
+    addCredits(credits: Int!): User
+    restCredits(credits: Int!): User
     addCreation(creationText: String!, url: String!): Creation
     addOrder(products: [ID]!): Order
     updateProduct(_id: ID!, quantity: Int!): Product

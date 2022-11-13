@@ -1,5 +1,16 @@
 import gql from 'graphql-tag';
 
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      credits
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
 {
   user {
@@ -64,6 +75,16 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
+export const QUERY_PRODUCT = gql`
+  query Product($id: ID!) {
+    product(_id: $id) {
+      name
+      price
+    }
+  }
+`;
+
+
 export const QUERY_ALL_PRODUCTS = gql`
   {
     products {
@@ -96,3 +117,4 @@ export const QUERY_BUSINESS_TYPES = gql`
     }
   }
 `;
+

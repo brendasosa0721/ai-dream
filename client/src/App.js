@@ -7,6 +7,7 @@ import Results from "./pages/Results";
 import Creation from "./pages/Creation";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Success from "./pages/Success";
 import { StoreProvider } from './utils/GlobalState';
 import { setContext } from '@apollo/client/link/context';
 import Collection from "./pages/Collection";
@@ -21,10 +22,15 @@ import "@emotion/react";
 import "@emotion/styled"
 import AddCredits from './components/AddCredits/AddCredits';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Pricing from './pages/Pricing';
 =======
 import HowItWorks from './pages/HowItWorks';
 >>>>>>> feature/howitworks
+=======
+import HowItWorks from './pages/HowItWorks';
+import Pricing from './pages/Pricing';
+>>>>>>> 29ee6d07b393393daf52cd702555c70f38cc4856
 
 
 function App() {
@@ -62,17 +68,23 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/results" element={<Results />} />
-
-                <Route path="/creation" element={<Creation />} />
+                
+                <Route path="/creations" element={<Creation />} />
                 <Route path="/sign-in" element={<Signin />} />
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <Route path="/pricing" element={<Pricing/>} />
 =======
                 <Route path="/how-it-works" element={<HowItWorks />} />
 >>>>>>> feature/howitworks
+=======
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/pricing" element={<Pricing/>} />
+                <Route path="/success" element={<Success />} />
+>>>>>>> 29ee6d07b393393daf52cd702555c70f38cc4856
               </Routes>
             </div>
             <Footer />

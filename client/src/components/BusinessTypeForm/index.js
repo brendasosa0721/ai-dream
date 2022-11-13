@@ -51,7 +51,7 @@ function BusinessTypeForm() {
     },
     );
   };
-  console.log(businessTypes);
+  
   return (
     <>
       <InputLabel id="type">Company Type (Optional)</InputLabel>
