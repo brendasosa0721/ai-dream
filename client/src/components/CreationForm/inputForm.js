@@ -1,4 +1,6 @@
 import React , {useEffect, useState} from 'react';
+import Auth from '../../utils/auth';
+import { Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,18 +11,18 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Concept from './concept';
 import { Layout } from './layout';
 import Review from './review';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { useStoreContext } from '../../utils/GlobalState';
-import { QUERY_CREATION } from "../../utils/queries";
+import { QUERY_CREATION, QUERY_ME } from "../../utils/queries";
+import { REST_CREDITS } from "../../utils/mutations";
 import {
-  UPDATE_CONCEPT_INFO,
-  API_RESULTS
+  UPDATE_CONCEPT_INFO
 } from '../../utils/actions';
 
 
@@ -42,10 +44,24 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function InputForm() {
+  
+  const { data: userData } = useQuery(QUERY_ME);
+  const [restCredits] = useMutation(REST_CREDITS);
+  const [alert, setAlert] = useState(null);
+  const [btnDisabled, setBtnDisabled] = useState(false);
+
+  useEffect(() => {
+      if (userData?.me.credits < 1) {
+        setAlert("You don't have enough credits.");
+        setBtnDisabled(true);
+      }
+  },[userData])
+
   const [state, dispatch] = useStoreContext();
   const { conceptInfo } = state;
 
   const [activeStep, setActiveStep] = useState(0);
+  const [readyToOrder, setReadyToOrder] = useState(false);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -62,12 +78,18 @@ export default function InputForm() {
 
   let result;
 
-    
+
   useEffect(() => {
     if (!loading) {
       result = data?.api.data;
   
       if (result) {
+        const mutationResponse = restCredits({
+          variables: {
+            credits: conceptInfo.totalCredits
+          }
+        });
+      
         localStorage.setItem('creations', JSON.stringify(result));
         window.location.assign("/results");
       }
@@ -77,13 +99,12 @@ export default function InputForm() {
   },[loading])
 
   
-  
+  useEffect(() => {
+    setReadyToOrder(state.conceptInfo.readyToOrder);
+  },[state])
+
   async function handleGenerate(event) {
     event.preventDefault();
-    // setFormState({
-    //   ...formState,
-    //   promptLoading: true
-    // });
     dispatch({
       type: UPDATE_CONCEPT_INFO,
       conceptInfo: {...state.conceptInfo, promptLoading: true}
@@ -92,7 +113,9 @@ export default function InputForm() {
 
   }
 
-
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/sign-in" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -114,6 +137,9 @@ export default function InputForm() {
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        {alert &&
+          <Alert severity="error">{alert}</Alert>
+        }
           <Typography component="h1" variant="h4" align="center">
             Let's design it!
           </Typography>
@@ -143,22 +169,22 @@ export default function InputForm() {
                   </Button>
                 )}
 
-                { !state.conceptInfo.readyToOrder &&
+                { !readyToOrder &&
                   <Button
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
-                    disabled={activeStep === steps.length - 1}
+                    disabled={(activeStep === steps.length - 1) || btnDisabled}
                   >
                     {activeStep === steps.length - 1 ? 'Get Ready' : 'Next'}
                   </Button>
                 }
-                { state.conceptInfo.readyToOrder &&
+                { readyToOrder && 
                   <Button
                     variant="contained"
                     onClick={handleGenerate}
                     sx={{ mt: 3, ml: 1 }}
-                    disabled={state.conceptInfo.promptLoading}
+                    disabled={state.conceptInfo.promptLoading || btnDisabled}
                   >
                     {activeStep === steps.length - 1 ? 'Design it!' : 'Next'}
                   </Button>

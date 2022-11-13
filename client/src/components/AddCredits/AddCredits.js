@@ -127,7 +127,7 @@ const AddCredits = () => {
           {productsData?.products.map((product) => (
             <Grid key= {product._id} container justifyContent="space-around" xs={5} sx={{m: 3}}>
               <Card className={classes.root}>
-              <CardHeader title={product.name + " credits"} className={classes.header} />
+              <CardHeader title={product.name} className={classes.header} />
               <Divider variant="middle" />
               <CardContent>
                 <Typography variant="h4" align="center">

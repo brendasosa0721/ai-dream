@@ -54,3 +54,14 @@ export const ADD_CREATION = gql`
     }
   }
 `;
+
+export const REST_CREDITS = gql`
+  mutation RestCredits($credits: Int!) {
+    restCredits(credits: $credits) {
+      _id
+      username
+      email
+      credits
+    }
+  }
+`;

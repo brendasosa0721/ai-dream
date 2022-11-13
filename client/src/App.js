@@ -21,6 +21,8 @@ import "@mui/material";
 import "@emotion/react"; 
 import "@emotion/styled"
 import AddCredits from './components/AddCredits/AddCredits';
+import HowItWorks from './pages/HowItWorks';
+import Pricing from './pages/Pricing';
 
 
 function App() {
@@ -59,11 +61,14 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/results" element={<Results />} />
                 
-                <Route path="/creation" element={<Creation />} />
+                <Route path="/creations" element={<Creation />} />
                 <Route path="/sign-in" element={<Signin />} />
                 <Route path="/sign-up" element={<Signup />} />
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/pricing" element={<Pricing/>} />
+                <Route path="/success" element={<Success />} />
               </Routes>
             </div>
             <Footer />

@@ -82,7 +82,6 @@ const resolvers = {
 
 
       for (let i = 0; i < products.length; i++) {
-        console.log(products[i]);
         // generate product id
         const product = await stripe.products.create({
           name: products[i].name
@@ -133,15 +132,14 @@ const resolvers = {
       );
     },
     api: async (parent, args, context) => {
-      console.log(args.promptInput);
-      // if (context.user) {
+      if (context.user) {
       const response = await api.generateImage({
         prompt: args.promptInput,
       });
       return response;
-      // }
+      }
 
-      // throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError('Not logged in');
     },
   },
 
@@ -169,7 +167,6 @@ const resolvers = {
       return { token, user };
     },
     addCreation: async (parent, args, context) => {
-      console.log(context.user.username);
       if (context.user) {
         const creation = await Creation.create({
           ...args,
@@ -185,51 +182,43 @@ const resolvers = {
         return creation;
       }
     },
-    addCredits: async (parent, { newCredits }, context) => {
-      console.log(context.user._id);
-      let totalCredits = context.user.totalCredits + newCredits;
-      // if (context.user) {
-      //   let totalCredits = context.user.totalCredits + newCredits;
-      //   // const credits = await Credits.create({
-      //   //   ...args,
-      //   //   username: context.user.username,
-      //   //   // add the function for math
-      //   };
-      //   const creation = await Creation.create({
-      //     ...args,
-      //     username: context.user.username,
-      //   });
+    addCredits: async (parent, { credits }, context) => {
+      if (context.user) {
 
-      //   updateProduct: async (parent, { _id, quantity }) => {
-      // const decrement = Math.abs(quantity) * -1;
-
-      //   return await User.findByIdAndUpdate(
-      //     context.user._id,
-      //     { $inc: { quantity: decrement } },
-      //     { new: true }
-      //   );
-      // },
-
-      await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $inc: { totalCredits: totalCredits } },
-        { new: true }
-      );
+        const totalCredits = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $inc: { credits: credits } },
+          { new: true }
+        );
 
       return totalCredits;
+      }
+      throw new AuthenticationError('Not logged in');
+
+    },
+    restCredits: async (parent, { credits }, context) => {
+      if (context.user) {
+
+        const decrement = Math.abs(credits) * -1;
+        const totalCredits = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $inc: { credits: decrement } },
+          { new: true }
+        );
+
+        return totalCredits;
+      }
+      throw new AuthenticationError('Not logged in');
+
     },
     addOrder: async (parent, { products }, context) => {
-      console.log(context);
       if (context.user) {
         const order = new Order({ products });
-
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
-
         return order;
       }
-
       throw new AuthenticationError("Not logged in");
     },
     updateProduct: async (parent, { _id, quantity }) => {

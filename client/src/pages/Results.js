@@ -44,10 +44,8 @@ export default function TitlebarImageList() {
 
 
   const imageData = [];
-  console.log(urlData.data);
   if(urlData.data.length !== 0){
     urlData.data.forEach(element => {
-      console.log(element.url);
       imageData.push(element.url);
     });
   }
@@ -61,7 +59,6 @@ export default function TitlebarImageList() {
     closeModal();
   }
 
-  console.log(imageData);
 
   return (
     

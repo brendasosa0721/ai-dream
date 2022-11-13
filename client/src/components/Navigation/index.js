@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React , { useState } from 'react';
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth";
 import AppBar from '@mui/material/AppBar';
@@ -17,12 +17,22 @@ import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 import SettingsSystemDaydreamTwoToneIcon from "@mui/icons-material/SettingsSystemDaydreamTwoTone";
 import "./navigation.css"
 import { lightBlue } from "@mui/material/colors";
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_ME } from "../../utils/queries";
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const publicPages = [{name: 'How it Works', link:'/how-it-works'}, 
+               {name: 'Pricing', link:'/pricing'}]
+
+const privatePages = [{name: 'My Collection', link:'/collection'}, 
+               {name: 'Create', link:'/creation'}]
+
 
 function ResponsiveAppBar() {
+  const { data: userData } = useQuery(QUERY_ME);
+
+  const settings = [ 'Account', 'Dashboard'];
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,6 +51,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  
   // if (Auth.loggedIn()) {
   //   setIsLogged(true);    
   // }
@@ -68,7 +79,7 @@ function ResponsiveAppBar() {
               padding: "2px 0 0 0",
             }}
           >
-            AI Dream
+            Ai-Dream
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -100,11 +111,17 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+            {Auth.loggedIn() ?  privatePages.map((page) => (
+                  <MenuItem key={page.name} component={Link} to={page.link} >
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                  )):''}
+            {!Auth.loggedIn() ?  publicPages.map((page) => (
+                <MenuItem  key={page.name} component={Link} to={page.link}>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>               
+                )):''}
+            
             </Menu>
           </Box>
           <SettingsSystemDaydreamTwoToneIcon
@@ -126,18 +143,43 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            AI Dream
+            Ai-Dream
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+          <Box justifyContent="flex-end" sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mr: 7}}>
+          {!Auth.loggedIn() ?  
+            <>
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                component={Link} to='/how-it-works'
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                How it Works
               </Button>
-            ))}
+              <Button
+                component={Link} to='/pricing'
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Pricing
+              </Button>
+              </>
+          :''}
+
+          {Auth.loggedIn() ?  
+            <>
+              <Button
+                component={Link} to='/collection'
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                My Collection
+              </Button>
+              <Button
+                component={Link} to='/creations'
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Create
+              </Button>
+              </>
+          :''}
+          
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -164,11 +206,18 @@ function ResponsiveAppBar() {
             >
             { Auth.loggedIn() ? (
               <div>
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                  <MenuItem key="username">
+                    <Typography textAlign="center">{userData?.me.username.toUpperCase()}</Typography>
                   </MenuItem>
-                ))}
+
+                  <MenuItem key="credits">
+                    <Typography textAlign="center">Total credits: {userData?.me.credits}</Typography>
+                  </MenuItem>
+
+                  <MenuItem key="buy" >
+                    <Typography component={Link} to='/add-credits' textAlign="center" className="no-deco">Add credits</Typography>
+                  </MenuItem>
+
                   <MenuItem key="logout" href="/" onClick={() => Auth.logout()}>
                     <Typography textAlign="center">Sign-out</Typography>
                   </MenuItem>

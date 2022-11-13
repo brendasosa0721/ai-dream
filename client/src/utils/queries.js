@@ -1,5 +1,16 @@
 import gql from 'graphql-tag';
 
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      credits
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
 {
   user {
@@ -106,3 +117,4 @@ export const QUERY_BUSINESS_TYPES = gql`
     }
   }
 `;
+
