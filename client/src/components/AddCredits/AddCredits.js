@@ -1,4 +1,5 @@
-import * as React from "react";
+
+import React, { useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -17,6 +18,9 @@ import { QUERY_PRODUCTS } from "../../utils/queries.js";
 import { useQuery } from "@apollo/react-hooks";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { loadStripe } from '@stripe/stripe-js';
+import { useLazyQuery } from '@apollo/client';
+import { QUERY_CHECKOUT } from '../../utils/queries';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -71,63 +75,91 @@ const StyledAvatar = styled(Avatar)`
   }
   `}
 `;
- 
 
-export const AddCredits= React.memo(function PricingCard() {
-   const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
-   console.log("here is the", productsData)
-    const classes = useStyles();
+const stripePromise = loadStripe('pk_test_53EV49EHulEpkScQouWloySW00atAj6KCx');
+
+const AddCredits = () => {
+  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+
+  const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
+   const classes = useStyles();
+
+
+  useEffect(() => {
+    if (data) {
+      stripePromise.then((res) => {
+        res.redirectToCheckout({ sessionId: data.checkout.session });
+      });
+    }
+  }, [data]);
+
+  function submitCheckout(id) {
+    console.log('ID', id);
+    localStorage.setItem('item', id);
+
+    getCheckout({
+      variables: { products: [id]
+    },
+    });
+  }
+
   return (
     <>
-      <AppBar
-          position="absolute"
-          color="default"
-          elevation={0}
-          sx={{
-            position: 'relative',
-            mb: 4,
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          }}
-        >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Add Credits
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2} className="grid-cntr">
-          
-            {productsData?.products.map((product) => (
-              <Grid container justifyContent="space-around" xs={5} sx={{m: 3}}>
-                <Card key= {product._id} className={classes.root}>
-                <CardHeader title={product.name + " credits"} className={classes.header} />
-                <Divider variant="middle" />
-                <CardContent>
-                  <Typography variant="h4" align="center">
-                    $ {product.price}
-                  </Typography>
-                </CardContent>
-                <Divider variant="middle" />
-                <CardActions className={classes.action}>
-                  <ThemeProvider theme={customTheme}>
-                    <StyledAvatar>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                      >
-                        Buy
-                      </Button>
-                    </StyledAvatar>
-                  </ThemeProvider>
-                </CardActions>
-              </Card>
-            </Grid>
-            ))}
-        </Grid>
-      </Box>
-    </>
+    <AppBar
+        position="absolute"
+        color="default"
+        elevation={0}
+        sx={{
+          position: 'relative',
+          mb: 4,
+          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+        }}
+      >
+      <Toolbar>
+        <Typography variant="h6" color="inherit" noWrap>
+          Add Credits
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2} className="grid-cntr">
+        
+          {productsData?.products.map((product) => (
+            <Grid key= {product._id} container justifyContent="space-around" xs={5} sx={{m: 3}}>
+              <Card className={classes.root}>
+              <CardHeader title={product.name + " credits"} className={classes.header} />
+              <Divider variant="middle" />
+              <CardContent>
+                <Typography variant="h4" align="center">
+                  $ {product.price}
+                </Typography>
+              </CardContent>
+              <Divider variant="middle" />
+              <CardActions className={classes.action}>
+                <ThemeProvider theme={customTheme}>
+                  <StyledAvatar>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={()=>submitCheckout(product._id)}
+                    >
+                      Buy
+                    </Button>
+                  </StyledAvatar>
+                </ThemeProvider>
+              </CardActions>
+            </Card>
+          </Grid>
+          ))}
+      </Grid>
+    </Box>
+  </>
+    // <div className="cart">
+    //           <button onClick={()=>submitCheckout(item._id)}>Checkout</button>
+    //           <span>(log in to check out)</span>
+    // </div>
   );
-})
-export default AddCredits
+};
+
+export default AddCredits;

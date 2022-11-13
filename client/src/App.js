@@ -7,6 +7,7 @@ import Results from "./pages/Results";
 import Creation from "./pages/Creation";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Success from "./pages/Success";
 import { StoreProvider } from './utils/GlobalState';
 import { setContext } from '@apollo/client/link/context';
 import Collection from "./pages/Collection";
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
                 <Route path="/How-It-Works" element={<HowItWorks />} />
+                <Route path="/success" element={<Success />} />
               </Routes>
             </div>
             <Footer />

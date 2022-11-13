@@ -9,6 +9,8 @@ const {
   BusinessType,
 } = require("../models");
 const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
+const stripe = require('stripe')('sk_test_51GVpEwC4q7PuQFomp0Q5oSBT1mm1vbZhhIH0u9ZM86ORb6yQy9h72h8pa91rUfrfJoeCVOurSf1UK4bZJfRtd8wz00SkKli8cd');
 
 const resolvers = {
   Query: {
@@ -71,17 +73,19 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
     checkout: async (parent, args, context) => {
+
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
-      const { products } = await order.populate("products").execPopulate();
+
+      const { products }  = await order.populate("products");
       const line_items = [];
 
+
       for (let i = 0; i < products.length; i++) {
+        console.log(products[i]);
         // generate product id
         const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`],
+          name: products[i].name
         });
 
         // generate price id using the product id
@@ -96,7 +100,9 @@ const resolvers = {
           price: price.id,
           quantity: 1,
         });
+        
       }
+     
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items,

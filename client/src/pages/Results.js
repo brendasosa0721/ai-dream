@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@material-ui/icons/Close'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { ADD_CREATION } from '../utils/mutations';
+import { useMutation } from '@apollo/react-hooks';
 
 const style = {
   position: "absolute",
@@ -23,6 +25,7 @@ const style = {
 
 export default function TitlebarImageList() {
   const urlData = JSON.parse(localStorage.getItem('creations'));
+  const [addCreation] = useMutation(ADD_CREATION);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState();
@@ -49,6 +52,14 @@ export default function TitlebarImageList() {
     });
   }
 
+  const HandleAddToCollection = async (modalImage) => {
+    const mutationResponse = await addCreation({
+      variables: {
+        url: modalImage
+      }
+    });
+    closeModal();
+  }
 
   console.log(imageData);
 
@@ -104,6 +115,7 @@ export default function TitlebarImageList() {
                 type="submit"
                 variant="contained"
                 sx={{ mt: 1, mb: 2, mr: 2 }}
+                onClick={() => HandleAddToCollection(modalImage)}
               >
                 Add to Collections
         </Button>
