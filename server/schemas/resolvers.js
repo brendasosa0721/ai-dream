@@ -78,7 +78,7 @@ const resolvers = {
     orders: async () => {
       return Order.find();
     },
-    
+
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -107,15 +107,14 @@ const resolvers = {
       }
 
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
+        payment_method_types: ["card"],
         line_items,
-        mode: 'payment',
+        mode: "payment",
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`
+        cancel_url: `${url}/`,
       });
 
       return { session: session.id };
-
     },
     businessCategories: async () => {
       return await BusinessCategory.find();
@@ -172,10 +171,10 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addCreation: async (parent, args, context) => {
+    addCreation: async (parent, url, context) => {
       if (context.user) {
         const creation = await Creation.create({
-          ...args,
+          creationUrl: url,
           username: context.user.username,
         });
 
@@ -189,20 +188,21 @@ const resolvers = {
       }
     },
     addCredits: async (parent, { sessionId }) => {
-      
       if (sessionId) {
         console.log(sessionId);
-        const order = await Order.findOne({ sessionId: sessionId }).populate("products").populate("user");
+        const order = await Order.findOne({ sessionId: sessionId })
+          .populate("products")
+          .populate("user");
 
-        if (order.status === 'in progress') {
+        if (order.status === "in progress") {
           await Order.findByIdAndUpdate(
             order._id,
-            { status: 'paid'},
+            { status: "paid" },
             { new: true }
           );
           // by now just select the only product that is in the order.
           const product = await Product.findById(order.products[0]._id);
-          console.log('product',product);
+          console.log("product", product);
 
           // hardcoding the credits per dollar. Must change in the future.
           let newCredits = product.price * 10;
@@ -211,10 +211,9 @@ const resolvers = {
             { _id: order.user._id },
             { $inc: { credits: newCredits } },
             { new: true }
-          )
-          
+          );
         }
-    
+
         return sessionId;
       }
       throw new AuthenticationError("Not logged in");
@@ -234,11 +233,10 @@ const resolvers = {
     },
 
     addOrder: async (parent, args, context) => {
-      
       if (context.user) {
         const order = await Order.create({
           ...args,
-          user: context.user 
+          user: context.user,
         });
         const user = await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
@@ -248,10 +246,13 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    updateOrder: async (parent, _id, args ) => {
+    updateOrder: async (parent, _id, args) => {
       return await Order.findByIdAndUpdate(
         _id,
-        { sessionId: args.body.variables.sessionId, status: args.body.variables.status },
+        {
+          sessionId: args.body.variables.sessionId,
+          status: args.body.variables.status,
+        },
         { new: true }
       );
     },

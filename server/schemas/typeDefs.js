@@ -14,7 +14,6 @@ const typeDefs = gql`
 
   type Creation {
     _id: ID
-    creationText: String
     url: String
     createdAt: String
     username: String
@@ -90,7 +89,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addCredits(sessionId: String!): User
     restCredits(credits: Int!): User
-    addCreation(creationText: String!, url: String!): Creation
+    addCreation(creationUrl: String!): Creation
     addOrder(products: [ID]!): Order
     updateOrder(_id: ID!, sessionId: String, status: String): Order
     updateProduct(_id: ID!, quantity: Int!): Product

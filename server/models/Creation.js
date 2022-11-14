@@ -3,11 +3,7 @@ const dateFormat = require('../utils/dateFormat');
 
 const creationSchema = new Schema(
   {
-    creationText: {
-      type: String,
-      minlength: 1,
-      maxlength: 280
-    },
+    
     creationUrl: {
       type: String,
       minlength: 1,

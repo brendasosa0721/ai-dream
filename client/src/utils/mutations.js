@@ -42,13 +42,9 @@ export const UPDATE_ORDER = gql`
 `;
 
 export const ADD_CREATION = gql`
-  mutation addCreation($creationText: String!, $url: String!) {
-    addCreation(creationText: $creationText, url: $url) {
+  mutation AddCreation( $url: String!) {
+    addCreation( url: $url) {
       _id
-      creationText
-      url
-      createdAt
-      username
     }
   }
 `;
