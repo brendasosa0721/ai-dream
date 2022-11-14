@@ -173,6 +173,7 @@ const resolvers = {
     },
     addCreation: async (parent, url, context) => {
       if (context.user) {
+        console.log('addCreation');
         const creation = await Creation.create({
           creationUrl: url,
           username: context.user.username,
