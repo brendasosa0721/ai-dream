@@ -9,6 +9,7 @@ const typeDefs = gql`
     email: String
     credits: Int
     creations: [Creation]
+    orders: [Order]
   }
 
   type Creation {
@@ -41,10 +42,10 @@ const typeDefs = gql`
 
   type Order {
     _id: ID
+    user: User
     purchaseDate: String
     products: [Product]
-    user: ID
-    session:ID
+    sessionId: String
     status: String
   }
 
@@ -78,6 +79,7 @@ const typeDefs = gql`
     product(_id: ID!): Product
     products: [Product]
     order(_id: ID!): Order
+    orders: Order
     checkout(products: [ID]!): Checkout
     businessCategories: [BusinessCategory]
     businessTypes(businessCategory: ID!): [BusinessType]
@@ -86,11 +88,11 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addCredits(credits: Int!): User
+    addCredits(sessionId: String!): User
     restCredits(credits: Int!): User
     addCreation(creationText: String!, url: String!): Creation
     addOrder(products: [ID]!): Order
-    updateOrder(sessionId: String): Order
+    updateOrder(_id: ID!, sessionId: String, status: String): Order
     updateProduct(_id: ID!, quantity: Int!): Product
     addBusinessCategory(name: String!): BusinessCategory
     addBusinessType(title: String!, BusinessCategory: ID!): BusinessType

@@ -51,10 +51,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  
-  // if (Auth.loggedIn()) {
-  //   setIsLogged(true);    
-  // }
 
   return (
     <AppBar position="static"className='gradient'>
