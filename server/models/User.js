@@ -29,6 +29,12 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Creation'
       }
+    ],
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Order'
+      }
     ]
   }
 );

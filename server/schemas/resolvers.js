@@ -60,18 +60,25 @@ const resolvers = {
 
     //   throw new AuthenticationError('Not logged in');
     // },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: "orders.products",
-          populate: "category",
-        });
+    // order: async (parent, { _id }, context) => {
+    //   if (context.user) {
+    //     const user = await User.findById(context.user._id).populate({
+    //       path: "orders.products",
+    //       populate: "category",
+    //     });
 
-        return user.orders.id(_id);
-      }
+    //     return user.orders.id(_id);
+    //   }
 
-      throw new AuthenticationError("Not logged in");
+    //   throw new AuthenticationError("Not logged in");
+    // },
+    order: async (parent, { _id }) => {
+      return await Order.findById(user._id).populate("products");
     },
+    orders: async () => {
+      return Order.find();
+    },
+    
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -100,17 +107,15 @@ const resolvers = {
       }
 
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
+        payment_method_types: ['card'],
         line_items,
-        mode: "payment",
+        mode: 'payment',
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
+        cancel_url: `${url}/`
       });
-      return { session: session.id, session: session.customer };
 
-      ////////// session: session_id -original
+      return { session: session.id };
 
-      //////// session:customer- added by devi
     },
     businessCategories: async () => {
       return await BusinessCategory.find();
@@ -183,15 +188,34 @@ const resolvers = {
         return creation;
       }
     },
-    addCredits: async (parent, { credits }, context) => {
-      if (context.user) {
-        const totalCredits = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $inc: { credits: credits } },
-          { new: true }
-        );
+    addCredits: async (parent, { sessionId }) => {
+      
+      if (sessionId) {
+        console.log(sessionId);
+        const order = await Order.findOne({ sessionId: sessionId }).populate("products").populate("user");
 
-        return totalCredits;
+        if (order.status === 'in progress') {
+          await Order.findByIdAndUpdate(
+            order._id,
+            { status: 'paid'},
+            { new: true }
+          );
+          // by now just select the only product that is in the order.
+          const product = await Product.findById(order.products[0]._id);
+          console.log('product',product);
+
+          // hardcoding the credits per dollar. Must change in the future.
+          let newCredits = product.price * 10;
+
+          const user = await User.findByIdAndUpdate(
+            { _id: order.user._id },
+            { $inc: { credits: newCredits } },
+            { new: true }
+          )
+          
+        }
+    
+        return sessionId;
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -208,10 +232,15 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in");
     },
-    addOrder: async (parent, { products }, context) => {
+
+    addOrder: async (parent, args, context) => {
+      
       if (context.user) {
-        const order = new Order({ products });
-        await User.findByIdAndUpdate(context.user._id, {
+        const order = await Order.create({
+          ...args,
+          user: context.user 
+        });
+        const user = await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
         });
         return order;
@@ -219,15 +248,12 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    updateOrder: async (parent, { sessionId }, ) => {
-     
+    updateOrder: async (parent, _id, args ) => {
       return await Order.findByIdAndUpdate(
-        sessionId,
-        { status: "paid"  },
+        _id,
+        { sessionId: args.body.variables.sessionId, status: args.body.variables.status },
         { new: true }
       );
-        
-      throw new AuthenticationError("Not logged in");
     },
 
     updateProduct: async (parent, { _id, quantity }) => {

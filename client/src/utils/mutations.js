@@ -26,19 +26,17 @@ export const ADD_USER = gql`
 
 
 export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
+  mutation AddOrder($products: [ID]!) {
     addOrder(products: $products) {
-      purchaseDate
-      products {
-        _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      } 
-      }
+      _id
+    }
+  }
+`;
+
+export const UPDATE_ORDER = gql`
+  mutation UpdateOrder($id: ID!, $sessionId: String, $status: String) {
+    updateOrder(_id: $id, sessionId: $sessionId, status: $status) {
+      _id
     }
   }
 `;
@@ -62,6 +60,14 @@ export const REST_CREDITS = gql`
       username
       email
       credits
+    }
+  }
+`;
+
+export const ADD_CREDITS = gql`
+  mutation AddCredits($sessionId: String!) {
+    addCredits(sessionId: $sessionId) {
+      _id
     }
   }
 `;

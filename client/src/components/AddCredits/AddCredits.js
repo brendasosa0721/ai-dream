@@ -1,5 +1,7 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Auth from '../../utils/auth';
+import { Navigate } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -15,11 +17,12 @@ import "./AddCredit.css"
 import { deepPurple } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import { QUERY_PRODUCTS } from "../../utils/queries.js";
+import { ADD_ORDER, UPDATE_ORDER } from "../../utils/mutations.js";
 import { useQuery } from "@apollo/react-hooks";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { loadStripe } from '@stripe/stripe-js';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { QUERY_CHECKOUT } from '../../utils/queries';
 
 
@@ -80,20 +83,42 @@ const stripePromise = loadStripe('pk_test_53EV49EHulEpkScQouWloySW00atAj6KCx');
 
 const AddCredits = () => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const [addOrder, { data: addOrderRes }] = useMutation(ADD_ORDER);
+  const [updateOrder, { data: updateOrderRes }] = useMutation(UPDATE_ORDER);
+  const [orderId, setOrderId] = useState(null);
 
   const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
-   const classes = useStyles();
-
-
+  const classes = useStyles();
+  
   useEffect(() => {
+    console.log('data',data);
     if (data) {
+      
+      const updateOrderData = updateOrder({
+        variables: {
+          id: orderId,
+          sessionId: data.checkout.session,
+          status: 'in progress'
+        }
+      });
+      console.log('updateOrderData',updateOrderData);
       stripePromise.then((res) => {
         res.redirectToCheckout({ sessionId: data.checkout.session });
       });
     }
   }, [data]);
 
-  function submitCheckout(id) {
+  async function submitCheckout(id) {
+
+    const orderData = await addOrder({
+      variables: {
+        products: [id]
+      }
+    });
+
+    setOrderId(orderData.data.addOrder._id);
+    console.log('ORDERID',orderData);
+
     console.log('ID', id);
     localStorage.setItem('item', id);
 
@@ -101,6 +126,10 @@ const AddCredits = () => {
       variables: { products: [id]
     },
     });
+  }
+
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/sign-in" />;
   }
 
   return (
