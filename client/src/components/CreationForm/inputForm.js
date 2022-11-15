@@ -48,7 +48,7 @@ export default function InputForm() {
   const { data: userData } = useQuery(QUERY_ME);
   const [restCredits] = useMutation(REST_CREDITS);
   const [alert, setAlert] = useState(null);
-  const [btnDisabled, setBtnDisabled] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
       if (userData?.me.credits < 1) {
@@ -100,6 +100,12 @@ export default function InputForm() {
 
   
   useEffect(() => {
+    if (state.conceptInfo.detailType === 'Select') {
+      setBtnDisabled(true);
+    } else {
+      setBtnDisabled(false);
+    }
+
     setReadyToOrder(state.conceptInfo.readyToOrder);
   },[state])
 

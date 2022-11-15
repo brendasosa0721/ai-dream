@@ -1,162 +1,157 @@
-import * as React from "react";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import IconButton from "@mui/material/IconButton";
-import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-// import Cart from "../Collection/Cart"
-import "./Collection.css";
-import Toolbar from '@mui/material/Toolbar';
+import React, { useEffect, useState } from 'react';
+import Auth from '../../utils/auth';
+import { Navigate } from 'react-router-dom';
+import ImageListItem from '@mui/material/ImageListItem';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
+import CloseIcon from '@material-ui/icons/Close'
 import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import { QUERY_ME } from '../../utils/queries';
+import { REMOVE_CREATION } from '../../utils/mutations';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { red } from '@mui/material/colors';
+import noImage from '../../assets/no-image.jpg'
+import Alert from '@mui/material/Alert';
 
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-export default function FullWidthGrid() {
-  return (
-    <>
-      <AppBar
-          position="absolute"
-          color="default"
-          elevation={0}
-          sx={{
-            position: 'relative',
-            mb: 4,
-            borderBottom: (t) => `1px solid ${t.palette.divider}`,
-          }}
-        >
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            My Collections
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <div className="box-container1">
-            <Grid item xs={6} md={4} className="box-container">
-              <ImageList
-                sx={{ width: 800, height: 450 }}
-                cols={2}
-                className="image-list"
-              >
-                {itemData.map((item) => (
-                  <ImageListItem key={item.img} className="box-container2">
-                    <img
-                      src={`${item.img}?w=248&fit=crop&auto=format`}
-                      srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      alt={item.title}
-                      loading="lazy"
-                    />
-
-                    <ImageListItemBar
-                      title={item.title}
-                      actionIcon={
-                        <IconButton
-                          sx={{ color: "white" }}
-                          aria-label={`add to the cart ${item.title}`}
-                        >
-                          <AddCircleOutlinedIcon />
-                          <StarBorderIcon />
-                        </IconButton>
-                      }
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
-            </Grid>
-          </div>
-
-          {/* <Grid className="cart" item xs={6} md={4} style={{ display: "inline-block" , border: "1px solid black" , borderRadius: "10px", height:"fit-content" , width:"fit-content" , paddingBottom: "10px"}}>
-            <Cart />
-          </Grid> */}
-          <Grid item xs={6} md={8}></Grid>
-        </Grid>
-      </Box>
-    </>
-  );
-}
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 2,
+};
 
 
 
+export default function TitlebarImageList() {
+  // const { loading, data: userData } = useQuery(QUERY_ME);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState();
+  const [errorUrls, setErrorUrls] = useState([]);
+  const [removeCreation, { data: demoveCreationRes }] = useMutation(REMOVE_CREATION);
+  const [lazyData, {loading, data: userData }] = useLazyQuery(QUERY_ME);
 
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+  const openModal = (image) => {
+    setModalOpen(true);
+    setModalImage(image);
+  }
+  const handleClick = e => {
+    e.stopPropagation();
+  };
 
+  useEffect(() => {
+    lazyData();
 
+  },[loading, userData])
 
-
-
-// export default function TitlebarImageList() {
-//   return (
-    // <div className="Collection">
-    //   <h1>Welcome to your AI COLLECTION</h1>
-    //   <ImageList sx={{ width: 1000, height: 550 }} cols={4}>
-    //     {itemData.map((item) => (
-    //       <ImageListItem key={item.img}>
-    //         <img
-    //           src={`${item.img}?w=248&fit=crop&auto=format`}
-    //           srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-    //           alt={item.title}
-    //           loading="lazy"
-    //         />
-
-    //         <ImageListItemBar
-    //           title={item.title}
-    //           actionIcon={
-    //             <IconButton
-    //               sx={{ color: "white" }}
-    //               aria-label={`add to the cart ${item.title}`}
-    //             >
-    //               <AddCircleOutlinedIcon />
-    //               <StarBorderIcon />
-    //             </IconButton>
-    //           }
-    //         />
-    //       </ImageListItem>
-    //     ))}
-    //   </ImageList>
-    //   <Grid>
-    //     <Cart />
-    //   </Grid>
-    // </div>
-//   );
-
-
-// }
-
-
-// Image information
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Creation",
-    rows: 2,
-    cols: 2,
-    featured: true,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Creation",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Creation",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Creation",
-    cols: 2,
-  },
   
-];
+  const deleteFromCollection = async (modalImage) => {
+    
+    const remove = await removeCreation({
+      variables: {
+        creationUrl: modalImage
+      }
+    });
+
+    if (remove) {
+      // userData.me.creations.filter((item) => item != modalImage);
+      lazyData();
+    }
+
+    closeModal();
+  }
+
+  const imageError = e => {
+    setErrorUrls([...errorUrls, e.target.currentSrc]);
+    console.log("Error 403 This external blob image does not longer exist. TODO: Persistent images in local server.");
+  }
+
+  if (loading) {
+    return (
+      <div>Loading...</div>
+    )
+  }
+
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/sign-in" />;
+  }
+  
+  return (
+    
+    <>
+    <AppBar
+        position="absolute"
+        color="default"
+        elevation={0}
+        sx={{
+          position: 'relative',
+          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+        }}
+      >
+      <Toolbar>
+        <Typography variant="h6" color="inherit" noWrap>
+          My Collections
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    <Grid container justifyContent="space-around" sx={{mt: 3, mb: 25}}>
+      {userData?.me.creations < 1 && <Alert severity="warning">There are no creations.</Alert>}
+
+        {userData?.me.creations.map((item) => (
+  
+          
+          <ImageListItem className={`thumbnail`} key={item.creationUrl.creationUrl} sx={{m: 2}}>
+
+
+            <img
+              onClick={() => openModal(item.creationUrl.creationUrl)}
+              onError={imageError}
+              src={errorUrls.includes(item.creationUrl.creationUrl) ? noImage : item.creationUrl.creationUrl}
+              alt={'img'}
+              loading='lazy'
+            />
+
+          </ImageListItem>
+        ))}
+
+    </Grid>
+    <Dialog
+        disableEscapeKeyDown
+        onClick={handleClick}
+        open={modalOpen}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+      <Grid container justifyContent="flex-end">
+        <CloseIcon onClick={closeModal} />
+      </Grid>
+      <img width="600px" 
+        src={`${modalImage}`}
+        alt={'img'}
+        loading="lazy"
+      />
+      <Grid container justifyContent="flex-end">
+        <Button
+                type="submit"
+                variant="contained"
+                sx={{ mt: 1, mb: 2, mr: 2, bgcolor: 'crimson'}}
+                onClick={() => deleteFromCollection(modalImage)}
+              >
+                Remove From Collections
+        </Button>
+      </Grid>
+    </Dialog>
+  </>
+  );
+  
+}

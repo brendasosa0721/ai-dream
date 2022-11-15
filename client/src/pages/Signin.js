@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
@@ -16,24 +16,49 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
 
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const [alert, setAlert] = useState(null);
+  const [emailError, setEmailError] = useState(false);
+  const [passError, setPassError] = useState(false);
+
   const [formState, setFormState] = useState({ email: '', password: '' })
   const [login, { error }] = useMutation(LOGIN);
 
+
   const handleFormSubmit = async event => {
     event.preventDefault();
-    try {
-      const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
-      const token = mutationResponse.data.login.token;
-      Auth.login(token);
-    } catch (e) {
-      console.log(e)
+
+    if (!formState.email)  {setEmailError(true)};   
+    if (!formState.password)  {setPassError(true)};  
+    
+    if (!formState.email || !formState.password) {
+      return
+
+    }else{
+      
+      try {
+        const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } })
+        const token = mutationResponse.data.login.token;
+        Auth.login(token);
+      } catch (e) {
+        console.log(e)
+        setAlert('Incorrect credentials.')
+      }
     }
+
   };
+
+  // useEffect(() => {
+  //   if (userData?.me.credits < 1) {
+  //     setAlert("You don't have enough credits.");
+  //     setBtnDisabled(true);
+  //   }
+  // },[userData])
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -51,6 +76,7 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
+            mb: 18,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -63,8 +89,11 @@ export default function SignIn() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleFormSubmit} noValidate sx={{ mt: 1 }}>
+            {alert && <Alert severity="error">{alert}</Alert>}
             <TextField
               margin="normal"
+              error={emailError}
+              helperText={emailError && "This field is required"}
               required
               fullWidth
               id="email"
@@ -78,6 +107,8 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
+              error={passError}
+              helperText={passError && "This field is required"}
               name="password"
               label="Password"
               type="password"

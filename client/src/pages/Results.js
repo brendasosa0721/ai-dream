@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageListItem from '@mui/material/ImageListItem';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -29,7 +29,9 @@ export default function TitlebarImageList() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState();
-  
+  const [imageSaved, setImageSaved] = useState(JSON.parse(localStorage.getItem('csaved')) || []);
+
+
   const closeModal = () => {
     setModalOpen(false);
   }
@@ -41,24 +43,30 @@ export default function TitlebarImageList() {
     e.stopPropagation();
   };
 
-
-// 
-  // const imageData = [];
-  // if(urlData.data.length !== 0){
-  //   urlData.data.forEach(element => {
-  //     imageData.push(element.url);
-  //   });
-  // }
+  const imageData = [];
+  if(urlData.data.length !== 0){
+    urlData.data.forEach(element => {
+      imageData.push(element.url);
+    });
+  }
 
   const HandleAddToCollection = async (modalImage) => {
     const mutationResponse = await addCreation({
       variables: {
-        url: modalImage
+        creationUrl: modalImage
       }
     });
+    if (mutationResponse) {
+      const savedImages = JSON.parse(localStorage.getItem('csaved')) || [];
+      if (savedImages) {
+        savedImages.push(modalImage);
+      }
+      savedImages.push(modalImage);
+      localStorage.setItem('csaved', JSON.stringify(savedImages));
+    }
+    setImageSaved(JSON.parse(localStorage.getItem('csaved')));
     closeModal();
   }
-
 
   return (
     
@@ -78,19 +86,22 @@ export default function TitlebarImageList() {
         </Typography>
       </Toolbar>
     </AppBar>
-    <Grid container justifyContent="space-around" sx={{mt: 3, mb: 5}}>
-        {imageData.map((item) => (
-          <ImageListItem className='thumbnail' key={item.img} sx={{m: 2}}>
+    <Grid container justifyContent="space-around" sx={{mt: 3, mb: 28}}>
+        {imageData?.map((item) => (
+  
+          
+          <ImageListItem className={`thumbnail ${imageSaved?.some((saved) => saved === item)? "creationSaved":""}`} key={item} sx={{m: 2}}>
             <img
-              onClick={() => openModal(item.img)}
+              onClick={() => openModal(item)}
               
-              src={`${item.img}`}
+              src={`${item}`}
               alt={'img'}
               loading='lazy'
             />
 
           </ImageListItem>
         ))}
+
     </Grid>
     <Dialog
         disableEscapeKeyDown
@@ -123,57 +134,3 @@ export default function TitlebarImageList() {
   
 }
 
-
-const imageData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-  },
-];
-
-// add clickaway listener to modal
-// add to collection -to add image to collection
