@@ -49,6 +49,14 @@ export const ADD_CREATION = gql`
   }
 `;
 
+export const REMOVE_CREATION = gql`
+  mutation RemoveCreation($creationUrl: String!) {
+    removeCreation(creationUrl: $creationUrl) {
+      username
+    }
+  }
+`;
+
 export const REST_CREDITS = gql`
   mutation RestCredits($credits: Int!) {
     restCredits(credits: $credits) {

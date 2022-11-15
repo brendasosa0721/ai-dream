@@ -1,14 +1,21 @@
 import gql from 'graphql-tag';
 
 export const QUERY_ME = gql`
-  {
-    me {
+{
+  me {
+    _id
+    username
+    email
+    creations {
       _id
-      username
-      email
-      credits
+      creationUrl
     }
+    orders {
+      _id
+    }
+    credits
   }
+}
 `;
 
 export const QUERY_USER = gql`
@@ -27,10 +34,7 @@ export const QUERY_USER = gql`
         image
       }
     }
-    creations {
-      _id
-      url
-    }
+    
   }
 }
 `;
@@ -118,3 +122,12 @@ export const QUERY_BUSINESS_TYPES = gql`
   }
 `;
 
+
+export const QUERY_COLLECTIONS = gql`
+  query businessTypes($businessCategory: ID!) {
+    businessTypes(businessCategory: $businessCategory) {
+      _id
+      title
+    }
+  }
+`;

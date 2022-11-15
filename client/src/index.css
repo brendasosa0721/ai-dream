@@ -27,6 +27,10 @@ body {
  
 }
 
+.creationSaved {
+  opacity: 0.5;
+}
+
 #card1{
   box-shadow: 5px 5px 10px rgb(205, 63, 205), inset 5px 5px 8px  rgb(229, 45, 229);
 }

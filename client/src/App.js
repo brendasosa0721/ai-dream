@@ -26,7 +26,7 @@ import HowItWorks from './pages/HowItWorks';
 
 
 function App() {
-
+  let hashHistory = Router.hashHistory;
   // const [menu] = useState(['Logo', 'Products', 'Marketing', 'About']);
   // const [currentTitle, setCurrentTitle] = useState(menu[0])
 
@@ -52,7 +52,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Router>
+      <Router history={hashHistory}>
         <div>
           <StoreProvider>
             <ResponsiveAppBar />

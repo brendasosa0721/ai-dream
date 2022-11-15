@@ -46,39 +46,12 @@ const resolvers = {
     product: async (parent, { _id }) => {
       return await Product.findById(_id).populate("category");
     },
-    // user: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const user = await User.findById(context.user._id).populate({
-    //       path: 'orders.products',
-    //       populate: 'category'
-    //     });
-
-    //     user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-    //     return user;
-    //   }
-
-    //   throw new AuthenticationError('Not logged in');
-    // },
-    // order: async (parent, { _id }, context) => {
-    //   if (context.user) {
-    //     const user = await User.findById(context.user._id).populate({
-    //       path: "orders.products",
-    //       populate: "category",
-    //     });
-
-    //     return user.orders.id(_id);
-    //   }
-
-    //   throw new AuthenticationError("Not logged in");
-    // },
     order: async (parent, { _id }) => {
       return await Order.findById(user._id).populate("products");
     },
     orders: async () => {
       return Order.find();
     },
-
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -173,7 +146,6 @@ const resolvers = {
     },
     addCreation: async (parent, url, context) => {
       if (context.user) {
-        console.log('addCreation');
         const creation = await Creation.create({
           creationUrl: url,
           username: context.user.username,
@@ -188,9 +160,28 @@ const resolvers = {
         return creation;
       }
     },
+    removeCreation: async (parent, url, context) => {
+      if (context.user) {
+        const updatedCreation = await Creation.findOneAndDelete(
+          { 'Creation.creationUrl.creationUrl': url  },
+          { new: true, runValidators: false }
+        );
+        console.log(updatedCreation);
+        if (true) {
+
+          const updatedUser = await User.findOneAndUpdate(
+            { username: context.user.username },
+            { $pull: { 'User.creations.creationUrl.creationUrl': url } },
+            { new: true, runValidators: false }
+          );  
+        return url
+        }
+      }
+      throw new AuthenticationError('You need to be logged in!');
+
+    },  
     addCredits: async (parent, { sessionId }) => {
       if (sessionId) {
-        console.log(sessionId);
         const order = await Order.findOne({ sessionId: sessionId })
           .populate("products")
           .populate("user");
@@ -203,7 +194,6 @@ const resolvers = {
           );
           // by now just select the only product that is in the order.
           const product = await Product.findById(order.products[0]._id);
-          console.log("product", product);
 
           // hardcoding the credits per dollar. Must change in the future.
           let newCredits = product.price * 10;
