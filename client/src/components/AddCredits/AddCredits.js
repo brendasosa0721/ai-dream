@@ -26,44 +26,44 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { QUERY_CHECKOUT } from '../../utils/queries';
 
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+// const Item = styled(Paper)(({ theme }) => ({
+//   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+//   ...theme.typography.body2,
+//   padding: theme.spacing(1),
+//   textAlign: "center",
+//   color: theme.palette.text.secondary,
+// }));
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    borderRadius: 12,
-    minWidth: 215,
-    textAlign: "center",
-    padding: "10px",
-  },
-  header: {
-    textAlign: "center",
-    spacing: 10,
-  },
-  list: {
-    padding: "20px",
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  action: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     borderRadius: 12,
+//     minWidth: 215,
+//     textAlign: "center",
+//     padding: "10px",
+//   },
+//   header: {
+//     textAlign: "center",
+//     spacing: 10,
+//   },
+//   list: {
+//     padding: "20px",
+//   },
+//   button: {
+//     margin: theme.spacing(1),
+//   },
+//   action: {
+//     display: "flex",
+//     justifyContent: "space-around",
+//   },
+// }));
 
-const customTheme = createTheme({
-  palette: {
-    primary: {
-      main: deepPurple[500],
-    },
-  },
-});
+// const customTheme = createTheme({
+//   palette: {
+//     primary: {
+//       main: deepPurple[500],
+//     },
+//   },
+// });
 
 const StyledAvatar = styled(Avatar)`
   ${({ theme }) => `
@@ -88,10 +88,9 @@ const AddCredits = () => {
   const [orderId, setOrderId] = useState(null);
 
   const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
-  const classes = useStyles();
+  // const classes = useStyles();
   
   useEffect(() => {
-    console.log('data',data);
     if (data) {
       
       const updateOrderData = updateOrder({
@@ -101,7 +100,6 @@ const AddCredits = () => {
           status: 'in progress'
         }
       });
-      console.log('updateOrderData',updateOrderData);
       stripePromise.then((res) => {
         res.redirectToCheckout({ sessionId: data.checkout.session });
       });
@@ -117,9 +115,7 @@ const AddCredits = () => {
     });
 
     setOrderId(orderData.data.addOrder._id);
-    console.log('ORDERID',orderData);
 
-    console.log('ID', id);
     localStorage.setItem('item', id);
 
     getCheckout({
@@ -155,8 +151,8 @@ const AddCredits = () => {
         
           {productsData?.products.map((product) => (
             <Grid key= {product._id} container justifyContent="space-around" xs={5} sx={{m: 3}}>
-              <Card className={classes.root}>
-              <CardHeader title={product.name} className={classes.header} />
+              <Card>
+              <CardHeader title={product.name}  />
               <Divider variant="middle" />
               <CardContent>
                 <Typography variant="h4" align="center">
@@ -164,19 +160,16 @@ const AddCredits = () => {
                 </Typography>
               </CardContent>
               <Divider variant="middle" />
-              <CardActions className={classes.action}>
-                <ThemeProvider theme={customTheme}>
+              <CardActions >
                   <StyledAvatar>
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
                       onClick={()=>submitCheckout(product._id)}
                     >
                       Buy
                     </Button>
                   </StyledAvatar>
-                </ThemeProvider>
               </CardActions>
             </Card>
           </Grid>
