@@ -20,7 +20,7 @@ import {
 import "@mui/material";
 import "@emotion/react"; 
 import "@emotion/styled"
-import AddCredits from './components/AddCredits/AddCredits';
+import AddCredits from './pages/AddCredits';
 import Pricing from './pages/Pricing';
 import HowItWorks from './pages/HowItWorks';
 
