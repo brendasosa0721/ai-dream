@@ -35,8 +35,9 @@ export default function TitlebarImageList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState();
   const [errorUrls, setErrorUrls] = useState([]);
-  const [removeCreation, { data: demoveCreationRes }] = useMutation(REMOVE_CREATION);
+  const [removeCreation, { data: removeCreationRes }] = useMutation(REMOVE_CREATION);
   const [lazyData, {loading, data: userData }] = useLazyQuery(QUERY_ME);
+  const [collection, setCollection] = useState({userData})
 
   const closeModal = () => {
     setModalOpen(false);
@@ -50,9 +51,11 @@ export default function TitlebarImageList() {
   };
 
   useEffect(() => {
-    lazyData();
+    const data = lazyData();
+    setCollection(data)
 
-  },[loading, userData])
+  },[collection])
+
 
   
   const deleteFromCollection = async (modalImage) => {
@@ -63,9 +66,11 @@ export default function TitlebarImageList() {
       }
     });
 
+    
     if (remove) {
       // userData.me.creations.filter((item) => item != modalImage);
-      lazyData();
+      await lazyData();
+      
     }
 
     closeModal();
@@ -105,9 +110,9 @@ export default function TitlebarImageList() {
       </Toolbar>
     </AppBar>
     <Grid container justifyContent="space-around" sx={{mt: 3, mb: 25}}>
-      {userData?.me.creations < 1 && <Alert severity="warning">There are no creations.</Alert>}
+      {collection?.me.creations < 1 && <Alert severity="warning">There are no creations.</Alert>}
 
-        {userData?.me.creations.map((item) => (
+        {collection?.me.creations.map((item) => (
   
           
           <ImageListItem className={`thumbnail`} key={item.creationUrl.creationUrl} sx={{m: 2}}>
