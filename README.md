@@ -1,2 +1,2 @@
-# ai-thing
-![Logo](https://via.placeholder.com/150x150)
+# AI-Dream
+![Logo](https://raw.githubusercontent.com/brberis/ai-dream-io/feature/readme/client/public/AI%20Dream.png)
