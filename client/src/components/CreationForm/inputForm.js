@@ -51,10 +51,12 @@ export default function InputForm() {
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
-      if (userData?.me.credits < 1) {
-        setAlert("You don't have enough credits.");
-        setBtnDisabled(true);
-      }
+    // workaround issue lo images on collections
+    localStorage.setItem('rel', '1')
+    if (userData?.me.credits < 1) {
+      setAlert("You don't have enough credits.");
+      setBtnDisabled(true);
+    }
   },[userData])
 
   const [state, dispatch] = useStoreContext();

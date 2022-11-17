@@ -15,7 +15,6 @@ import { useMutation, useLazyQuery } from '@apollo/react-hooks';
 import noImage from '../../assets/no-image.jpg'
 import Alert from '@mui/material/Alert';
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,6 +25,7 @@ const style = {
   boxShadow: 24,
   p: 2,
 };
+
 
 export default function TitlebarImageList() {
 
@@ -39,8 +39,13 @@ export default function TitlebarImageList() {
   // call lazy query on first render
   useEffect(() => {
     gueryCreations();
-    setImageSaved(creations?.creations);
+    if (creations) {
+      setImageSaved(creations.creations);
+    } else {
+      setImageSaved([]);
+    }
   },[loading])
+  
 
   const closeModal = () => {
     setModalOpen(false);
@@ -81,6 +86,15 @@ export default function TitlebarImageList() {
     )
   }
 
+  // workaround issue lo images on collections
+  if (imageSaved.length < 1) {
+    let reload = localStorage.getItem('rel');
+    if (reload === '1'){
+      localStorage.setItem('rel', '0')
+      window.location.reload();
+    }    
+  } 
+
   if (!Auth.loggedIn()) {
     return <Navigate to="/sign-in" />;
   }
@@ -104,10 +118,13 @@ export default function TitlebarImageList() {
       </Toolbar>
     </AppBar>
     <Grid container justifyContent="space-around" sx={{mt: 3, mb: 25}}>
-      {imageSaved.length < 1 && <Alert severity="warning">There are no creations.</Alert>}
+      {imageSaved.length < 1 && 
+        <Alert  severity="warning">There are no creations.</Alert>
+      }
       {imageSaved.map((item) => (
         
         <ImageListItem className={`thumbnail`} key={item._id} sx={{m: 2}}>
+
           <img
             onClick={() => openModal(item)}
             onError={imageError}

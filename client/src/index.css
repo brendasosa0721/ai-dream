@@ -3,6 +3,10 @@ body {
   margin: 0px;
 }
 
+.home {
+  margin-bottom: 200px;
+}
+
 /* Collections and results */
 .thumbnail {
   transition: transform 0.2s;

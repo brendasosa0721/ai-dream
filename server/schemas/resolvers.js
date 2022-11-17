@@ -10,7 +10,8 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require('apollo-server-express');
-const stripe = require('stripe')('sk_test_51GVpEwC4q7PuQFomp0Q5oSBT1mm1vbZhhIH0u9ZM86ORb6yQy9h72h8pa91rUfrfJoeCVOurSf1UK4bZJfRtd8wz00SkKli8cd');
+const stripe = require('stripe')(process.env.REACT_APP_API);
+
 
 const resolvers = {
   Query: {

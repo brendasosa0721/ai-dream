@@ -74,7 +74,7 @@ const StyledAvatar = styled(Avatar)`
   `}
 `;
 
-const stripePromise = loadStripe('pk_test_53EV49EHulEpkScQouWloySW00atAj6KCx');
+const stripePromise = loadStripe('pk_live_A2dkONxVCuwXKEfJTY4AQdlW00IrRfNnnJ');
 
 const AddCredits = () => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);

@@ -52,15 +52,3 @@ function CategoryMenu() {
 
 export default CategoryMenu;
 
-// curl https://api.stripe.com/v1/checkout/sessions \
-//   -u sk_test_51GVpEwC4q7PuQFomp0Q5oSBT1mm1vbZhhIH0u9ZM86ORb6yQy9h72h8pa91rUfrfJoeCVOurSf1UK4bZJfRtd8wz00SkKli8cd \
-//   -d "payment_method_types[]"=card \
-//   -d "line_items[][price]"="price_1M37rwC4q7PuQFom6XjGsNpe" \
-//   -d "line_items[][quantity]"=1 \
-//   -d mode=payment \
-//   -d success_url="https://example.com/success?session_id={CHECKOUT_SESSION_ID}" \
-//   -d cancel_url="https://example.com/cancel"
-
-//   curl https://api.stripe.com/v1/products \
-//   -u sk_test_4eC39HqLyjWDarjtT1zdp7dc: \
-//   -d name="Gold Special"

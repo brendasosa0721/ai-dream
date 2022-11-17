@@ -24,12 +24,10 @@ import AddCredits from './pages/AddCredits';
 import Pricing from './pages/Pricing';
 import HowItWorks from './pages/HowItWorks';
 
-
 function App() {
   let hashHistory = Router.hashHistory;
   // const [menu] = useState(['Logo', 'Products', 'Marketing', 'About']);
   // const [currentTitle, setCurrentTitle] = useState(menu[0])
-
 
   const httpLink = createHttpLink({
     uri: '/graphql',
@@ -66,7 +64,6 @@ function App() {
                 <Route path="/collection" element={<Collection />} />
                 <Route path="/add-credits" element={<AddCredits />} />
                 <Route path="/pricing" element={<Pricing/>} />
-                <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/pricing" element={<Pricing/>} />
                 <Route path="/success" element={<Success />} />
