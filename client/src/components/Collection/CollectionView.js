@@ -9,10 +9,9 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@material-ui/icons/Close'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import { QUERY_ME } from '../../utils/queries';
+import { QUERY_CREATIONS } from '../../utils/queries';
 import { REMOVE_CREATION } from '../../utils/mutations';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
-import { red } from '@mui/material/colors';
+import { useMutation, useLazyQuery } from '@apollo/react-hooks';
 import noImage from '../../assets/no-image.jpg'
 import Alert from '@mui/material/Alert';
 
@@ -28,16 +27,20 @@ const style = {
   p: 2,
 };
 
-
-
 export default function TitlebarImageList() {
-  // const { loading, data: userData } = useQuery(QUERY_ME);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState();
   const [errorUrls, setErrorUrls] = useState([]);
   const [removeCreation, { data: removeCreationRes }] = useMutation(REMOVE_CREATION);
-  const [lazyData, {loading, data: userData }] = useLazyQuery(QUERY_ME);
-  const [collection, setCollection] = useState({userData})
+  const [gueryCreations, {loading, data: creations }] = useLazyQuery(QUERY_CREATIONS);
+  const [imageSaved, setImageSaved] = useState(creations?.creations || []);
+
+  // call lazy query on first render
+  useEffect(() => {
+    gueryCreations();
+    setImageSaved(creations?.creations);
+  },[loading])
 
   const closeModal = () => {
     setModalOpen(false);
@@ -49,39 +52,30 @@ export default function TitlebarImageList() {
   const handleClick = e => {
     e.stopPropagation();
   };
-
-  useEffect(() => {
-    const data = lazyData();
-    setCollection(data)
-
-  },[collection])
-
-
   
-  const deleteFromCollection = async (modalImage) => {
-    
-    const remove = await removeCreation({
+  //delete handler
+  const deleteFromCollection = async (id) => {
+    const remove = removeCreation({
       variables: {
-        creationUrl: modalImage
+        id: id
       }
     });
-
     
-    if (remove) {
-      // userData.me.creations.filter((item) => item != modalImage);
-      await lazyData();
-      
-    }
+    setImageSaved(imageSaved.filter(image => image._id !== id));
 
     closeModal();
   }
+
+  // blob image link last few minutes. This is not in ower hands 
+  // so if the app detect a broken image will show a dummy photo.
+  // The solution is to store the images in our server.
 
   const imageError = e => {
     setErrorUrls([...errorUrls, e.target.currentSrc]);
     console.log("Error 403 This external blob image does not longer exist. TODO: Persistent images in local server.");
   }
 
-  if (loading) {
+  if (!imageSaved) {
     return (
       <div>Loading...</div>
     )
@@ -110,24 +104,18 @@ export default function TitlebarImageList() {
       </Toolbar>
     </AppBar>
     <Grid container justifyContent="space-around" sx={{mt: 3, mb: 25}}>
-      {collection?.me.creations < 1 && <Alert severity="warning">There are no creations.</Alert>}
-
-        {collection?.me.creations.map((item) => (
-  
-          
-          <ImageListItem className={`thumbnail`} key={item.creationUrl.creationUrl} sx={{m: 2}}>
-
-
-            <img
-              onClick={() => openModal(item.creationUrl.creationUrl)}
-              onError={imageError}
-              src={errorUrls.includes(item.creationUrl.creationUrl) ? noImage : item.creationUrl.creationUrl}
-              alt={'img'}
-              loading='lazy'
-            />
-
-          </ImageListItem>
-        ))}
+      {imageSaved.length < 1 && <Alert severity="warning">There are no creations.</Alert>}
+      {imageSaved.map((item) => (
+        
+        <ImageListItem className={`thumbnail`} key={item._id} sx={{m: 2}}>
+          <img
+            onClick={() => openModal(item)}
+            onError={imageError}
+            src={errorUrls.includes(item.creationUrl.creationUrl) ? noImage : item.creationUrl.creationUrl}
+            alt={'img'}
+          />
+        </ImageListItem>
+      ))}
 
     </Grid>
     <Dialog
@@ -141,7 +129,7 @@ export default function TitlebarImageList() {
         <CloseIcon onClick={closeModal} />
       </Grid>
       <img width="600px" 
-        src={`${modalImage}`}
+        src={`${modalImage?.creationUrl.creationUrl}`}
         alt={'img'}
         loading="lazy"
       />
@@ -150,7 +138,7 @@ export default function TitlebarImageList() {
                 type="submit"
                 variant="contained"
                 sx={{ mt: 1, mb: 2, mr: 2, bgcolor: 'crimson'}}
-                onClick={() => deleteFromCollection(modalImage)}
+                onClick={() => deleteFromCollection(modalImage._id)}
               >
                 Remove From Collections
         </Button>
@@ -158,5 +146,4 @@ export default function TitlebarImageList() {
     </Dialog>
   </>
   );
-  
 }

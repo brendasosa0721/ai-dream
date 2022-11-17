@@ -129,50 +129,34 @@ const AddCredits = () => {
 
   return (
     <>
-    <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          mb: 4,
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-      <Toolbar>
-        <Typography variant="h6" color="inherit" noWrap>
-          Add Credits
-        </Typography>
-      </Toolbar>
-    </AppBar>
-    <Box sx={{ flexGrow: 1 }}>
+
+    <Box >
       <Grid container spacing={2} className="grid-cntr">
-        
-          {productsData?.products.map((product) => (
-            <Grid key= {product._id} container justifyContent="space-around" xs={5} sx={{m: 3}}>
-              <Card>
+        {productsData?.products.map((product) => (
+          <Grid key= {product._id} container justifyContent="space-around" xs={5} sx={{m: 3}}>
+            <Card sx={{m: 133}}>
               <CardHeader title={product.name}  />
               <Divider variant="middle" />
               <CardContent>
                 <Typography variant="h4" align="center">
-                  $ {product.price}
+                $ {product.price}
                 </Typography>
               </CardContent>
               <Divider variant="middle" />
               <CardActions >
                   <StyledAvatar>
-                    <Button
+                      <Button
                       variant="contained"
                       color="primary"
                       onClick={()=>submitCheckout(product._id)}
-                    >
+                      >
                       Buy
-                    </Button>
+                      </Button>
                   </StyledAvatar>
               </CardActions>
-            </Card>
+              </Card>
           </Grid>
-          ))}
+        ))}
       </Grid>
     </Box>
   </>

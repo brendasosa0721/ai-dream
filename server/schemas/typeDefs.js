@@ -73,7 +73,7 @@ const typeDefs = gql`
     api(promptInput: String!): Api
     user(username: String!): User
     creation(_id: ID!): Creation
-    creations(username: String): [Creation]
+    creations: [Creation]
     categories: [Category]
     product(_id: ID!): Product
     products: [Product]
@@ -90,7 +90,7 @@ const typeDefs = gql`
     addCredits(sessionId: String!): User
     restCredits(credits: Int!): User
     addCreation(creationUrl: String!): Creation
-    removeCreation(creationUrl: String!): Creation
+    removeCreation(_id: ID!): Creation
     addOrder(products: [ID]!): Order
     updateOrder(_id: ID!, sessionId: String, status: String): Order
     updateProduct(_id: ID!, quantity: Int!): Product

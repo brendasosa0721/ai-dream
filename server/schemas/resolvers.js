@@ -30,9 +30,11 @@ const resolvers = {
         .select("-__v -password")
         .populate("creations");
     },
-    creations: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Creation.find(params).sort({ createdAt: -1 });
+    creations: async (parent, args, context) => {
+      if (context.user) {
+        const params = context.user.username;
+        return Creation.find({username: params}).sort({ createdAt: -1 });
+      }
     },
     creation: async (parent, { _id }) => {
       return Creation.findOne({ _id });
@@ -160,25 +162,12 @@ const resolvers = {
         return creation;
       }
     },
-    removeCreation: async (parent, url, context) => {
-      if (context.user) {
-        const updatedCreation = await Creation.findOneAndDelete(
-          { 'Creation.creationUrl.creationUrl': url  },
-          { new: true, runValidators: false }
-        );
-        console.log(updatedCreation);
-        if (true) {
-
-          const updatedUser = await User.findOneAndUpdate(
-            { username: context.user.username },
-            { $pull: { 'User.creations.creationUrl.creationUrl': url } },
-            { new: true, runValidators: false }
-          );  
-        return url
-        }
-      }
-      throw new AuthenticationError('You need to be logged in!');
-
+    removeCreation: async (parent, {_id}) => {
+      const updatedCreation = await Creation.findOneAndDelete(
+        _id,
+        { new: false }
+      );
+      console.log(updatedCreation._id);
     },  
     addCredits: async (parent, { sessionId }) => {
       if (sessionId) {

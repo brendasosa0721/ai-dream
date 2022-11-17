@@ -3,6 +3,7 @@ body {
   margin: 0px;
 }
 
+/* Collections and results */
 .thumbnail {
   transition: transform 0.2s;
   width: 270px;
@@ -12,6 +13,12 @@ body {
 
 .thumbnail:hover {
   transform: scale(1.05);
+}
+
+/* Add credits */
+.grid-cntr{
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /*Styling for the Pricing Page*/

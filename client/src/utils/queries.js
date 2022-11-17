@@ -47,6 +47,16 @@ export const QUERY_CREATION = gql`
   }
 `;
 
+export const QUERY_CREATIONS = gql`
+  query Creations {
+    creations {
+      _id
+      creationUrl
+    }
+  }
+`;
+
+
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
     checkout(products: $products) {

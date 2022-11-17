@@ -50,9 +50,9 @@ export const ADD_CREATION = gql`
 `;
 
 export const REMOVE_CREATION = gql`
-  mutation RemoveCreation($creationUrl: String!) {
-    removeCreation(creationUrl: $creationUrl) {
-      username
+  mutation RemoveCreation($id: ID!) {
+    removeCreation(_id: $id) {
+      _id
     }
   }
 `;

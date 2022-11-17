@@ -61,7 +61,6 @@ export default function TitlebarImageList() {
       if (savedImages) {
         savedImages.push(modalImage);
       }
-      savedImages.push(modalImage);
       localStorage.setItem('csaved', JSON.stringify(savedImages));
     }
     setImageSaved(JSON.parse(localStorage.getItem('csaved')));
