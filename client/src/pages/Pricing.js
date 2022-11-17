@@ -30,27 +30,16 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export default function Pricing() {
   return (
     <>
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: "relative",
-          mb: 4,
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      ></AppBar>
 
-      
         <div id="text-container">
           <Typography sx={{ fontSize: "30px" }}>
             <img id="price-image" alt="" src={Img} />
-            <p id="text-content">
+            <span id="text-content">
               <strong>AI Dream </strong>is here to make your business creation
               <br />
               easier. AI is here for YOU.
               <strong>Have FUN and be creative! </strong>
-            </p>
+            </span>
           </Typography>
         </div>
 
@@ -60,8 +49,9 @@ export default function Pricing() {
             sx={{
               background: "#bbdefb",
               height: "400px",
-              width: "450px",
+              width: "330px",
               borderRadius: "20px",
+              margin: "30px 20px"
             }}
           >
             <CardContent id="card-content">
@@ -87,7 +77,7 @@ export default function Pricing() {
                 id="btn-buy"
                 size="large"
                 sx={{
-                  background: "purple",
+                  background: "rgba(120,70,204,1)",
                   textAlign: "center",
                   top: "80px",
                   borderRadius: "10px",
@@ -103,8 +93,9 @@ export default function Pricing() {
             sx={{
               background: "#80deea",
               height: "400px",
-              width: "450px",
+              width: "330px",
               borderRadius: "20px",
+              margin: "30px 20px"
             }}
           >
             <CardContent id="card-content">
@@ -130,7 +121,7 @@ export default function Pricing() {
                 id="btn-buy"
                 size="large"
                 sx={{
-                  background: "purple",
+                  background: "rgba(120,70,204,1)",
                   textAlign: "center",
                   top: "80px",
                   borderRadius: "10px",
@@ -146,8 +137,10 @@ export default function Pricing() {
             sx={{
               background: "#d1c4e9",
               height: "400px",
-              width: "450px",
+              width: "330px",
               borderRadius: "20px",
+              margin: "30px 20px"
+
             }}
           >
             <CardContent id="card-content">
@@ -156,6 +149,7 @@ export default function Pricing() {
                 variant="h4"
                 component="div"
                 sx={{ fontSize: "40px", bottom: "20px" }}
+                
               >
                 Premium Plan
               </Typography>
@@ -163,6 +157,7 @@ export default function Pricing() {
                 variant="body2"
                 color="text.secondary"
                 sx={{ fontSize: "70px" }}
+                className="price"
               >
                 $39.99
               </Typography>
@@ -173,7 +168,7 @@ export default function Pricing() {
                 id="btn-buy"
                 size="large"
                 sx={{
-                  background: "purple",
+                  background: "rgba(120,70,204,1)",
                   textAlign: "center",
                   top: "80px",
                   borderRadius: "10px",
@@ -186,7 +181,7 @@ export default function Pricing() {
         </div>
 
         <div>
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "100%", margin: "auto auto 150px auto"}}>
             <Stack spacing={2}>
               <Item>
                 Pay As You Go

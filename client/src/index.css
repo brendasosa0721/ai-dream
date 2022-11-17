@@ -18,26 +18,29 @@ body {
 /* Add credits */
 .grid-cntr{
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 60px;
 }
 
 /*Styling for the Pricing Page*/
 
 .card-container {
   display: flex;
+  flex-wrap: wrap;
   /* flex-direction: row; */
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-  padding: 100px;
-  height: 300px;
-  margin-bottom: 10%;
+  padding: 50px 30px;
+  /* height: 300px; */
+  /* margin-bottom: 10%; */
   /* flex-wrap: wrap; */
+ 
 }
 
 .creationSaved {
   opacity: 0.5;
 }
+
 
 #card1 {
   box-shadow: 5px 5px 10px rgb(232, 155, 232),
@@ -47,6 +50,7 @@ body {
 #card2 {
   box-shadow: 5px 5px 10px rgb(128, 203, 230),
     inset 5px 5px 8px rgb(226, 202, 226);
+  
 }
 
 #card3 {
@@ -56,7 +60,7 @@ body {
 #btn-buy {
   align-items: center;
   justify-content: center;
-  margin-left: 150px;
+  margin: auto;
   cursor: pointer;
 }
 
@@ -66,6 +70,8 @@ body {
 }
 
 #text-container {
+  display: flex;
+  width: 100%;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -77,16 +83,16 @@ body {
   position: absolute;
   align-items: center;
   text-align: center;
+  margin-top: 80px;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 #price-image {
-  display: flex;
-  width: 1920px;
+  width: 2400px;
   position: relative;
-  top: -33px;
+  
   height: 400px;
 }
 /*Media Queries*/
@@ -116,9 +122,13 @@ body {
     justify-content: center;
     text-align: center;
   }
+
 }
 
-@media only screen and (max-width: 400px) {
+
+
+
+/* @media only screen and (max-width: 400px) {
   .card-container {
     flex-direction: column;
     height: 50%;
@@ -126,11 +136,11 @@ body {
     gap:20px;
   
   }
-}
+} */
 
 
 #price-image{
-width: 1920px;
+width: 100%x;
 }
 
 
@@ -183,7 +193,7 @@ padding: 5px;
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
   display: inline-block;
-      font-size: 50px;
+  font-size: 50px;
 }
 
 @keyframes textclip {
@@ -197,11 +207,12 @@ padding: 5px;
 
   justify-content: center;
   align-items: center;
- text-align: center;
+  text-align: center;
   display: flex;
- padding: 45px;
- left: 50%;
- bottom: 200px;
+  padding: 45px;
+  left: 50%;
+  bottom: 200px;
+  margin-top: -180px;
   
 }
 #btn-started{
@@ -244,14 +255,17 @@ text-align: center;
 }
  @media only screen  and (max-width:600px) 
   {
-   #timeline-container{
-    max-width: 100%;
-    display:block;
-    justify-content: center;
-    align-items: center;
-
-  
-    
+    #timeline-container{
+      max-width: 100%;
+      display:block;
+      justify-content: center;
+      align-items: center;
     }
+    
+    .card-container {
+      padding: 14px;
+    }
+
+   
   }
   
