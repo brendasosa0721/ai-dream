@@ -74,7 +74,7 @@ const StyledAvatar = styled(Avatar)`
   `}
 `;
 
-const stripePromise = loadStripe(process.env.REACT_APP_ST_PK_API);
+const stripePromise = loadStripe('pk_test_53EV49EHulEpkScQouWloySW00atAj6KCx');
 
 const AddCredits = () => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
