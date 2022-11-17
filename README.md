@@ -12,7 +12,7 @@ Creating marketing materials can be a process and can take anywhere from 4 to 6 
 
 ## Screenshot
 
-![alt screenshot](https://github.com/brberis/ai-dream-ioject/raw/main/src/assets/images/web.png)
+![alt screenshot](https://raw.githubusercontent.com/brberis/ai-dream-io/feature/readme/assets/images/web.png)
 
 ## Table of Contents
 
