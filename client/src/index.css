@@ -25,29 +25,33 @@ body {
 
 .card-container {
   display: flex;
+  /* flex-direction: row; */
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-  padding: 30px;
-  height: 400px;
-  margin: auto;
- 
+  padding: 100px;
+  height: 300px;
+  margin-bottom: 10%;
+  /* flex-wrap: wrap; */
 }
 
 .creationSaved {
   opacity: 0.5;
 }
 
-#card1{
-  box-shadow: 5px 5px 10px rgb(205, 63, 205), inset 5px 5px 8px  rgb(229, 45, 229);
+#card1 {
+  box-shadow: 5px 5px 10px rgb(232, 155, 232),
+    inset 5px 5px 8px rgb(177, 134, 177);
 }
 
-#card2{
-  box-shadow: 5px 5px 10px rgb(128, 203, 230), inset 5px 5px 8px  rgb(226, 202, 226);
+#card2 {
+  box-shadow: 5px 5px 10px rgb(128, 203, 230),
+    inset 5px 5px 8px rgb(226, 202, 226);
 }
 
-#card3{
-  box-shadow: 5px 5px 10px rgb(239, 189, 160), inset 5px 5px 8px  rgb(228, 203, 228);
+#card3 {
+  box-shadow: 5px 5px 10px rgb(239, 189, 160),
+    inset 5px 5px 8px rgb(228, 203, 228);
 }
 #btn-buy {
   align-items: center;
@@ -56,25 +60,72 @@ body {
   cursor: pointer;
 }
 
-#btn-buy:hover{
+#btn-buy:hover {
   cursor: pointer;
   background-color: rgb(109, 127, 205);
-  
 }
 
-#text-container{
+#text-container {
   text-align: center;
   justify-content: center;
   align-items: center;
   position: relative;
-
+  z-index: -10;
 }
 
-#text-content{
+#text-content {
   position: absolute;
-  top: 50%;
+  align-items: center;
+  text-align: center;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#price-image {
+  display: flex;
+  width: 1920px;
+  position: relative;
+  top: -33px;
+  height: 400px;
+}
+/*Media Queries*/
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media only screen and (max-width: 400px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #price-image {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #text-content {
+    top: 30%;
+    font-size: 25px;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .card-container {
+    flex-direction: column;
+    height: 50%;
+    width: 50%;
+    gap:20px;
+  
+  }
 }
 
 
