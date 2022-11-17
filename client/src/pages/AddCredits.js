@@ -74,13 +74,13 @@ const StyledAvatar = styled(Avatar)`
   `}
 `;
 
-const stripePromise = loadStripe('pk_live_A2dkONxVCuwXKEfJTY4AQdlW00IrRfNnnJ');
+const stripePromise = loadStripe(process.env.REACT_APP_ST_PK_API);
 
 const AddCredits = () => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
   const { loading, data: productsData } = useQuery(QUERY_PRODUCTS);
-   const classes = useStyles();
+  const classes = useStyles();
 
 
   useEffect(() => {

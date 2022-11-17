@@ -22,7 +22,7 @@ const userSchema = new Schema(
     },
     credits: {
           type: Number,
-          default: 50
+          default: 15
     },
     creations: [
       {
