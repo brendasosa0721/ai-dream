@@ -42,7 +42,7 @@ Creating marketing materials can be a process and can take anywhere from 4 to 6 
 ## Deployment
 
 This app is deployed in Heroku.
-[Click Here](https://boiling-sea-19359.herokuapp.com/herokuapp.com) to view the demo app.
+[Click Here](https://boiling-sea-19359.herokuapp.com) to view the demo app.
 
 ## Questions
 
